@@ -1,4 +1,4 @@
-##Fidelity Cards Management System v1.0
+## Fidelity Cards Management System v1.0
 
 This tool helps your business to manage fidelity cards. 
 You can add new cards, edit values linked to card (e.g. Name, Phone, email) and add points to card.
