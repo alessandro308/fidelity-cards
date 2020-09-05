@@ -3,6 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {AuthCheck, useAuth} from 'reactfire';
 import Login from './pages/Login/Login.component';
+import CardManagement from './pages/CardManagement';
 import {
     BrowserRouter as Router,
     Switch,
@@ -39,7 +40,7 @@ function App () {
                             <Login></Login>
                         </Route>
                         <Route path="/app">
-                            <div>home</div>
+                            <CardManagement/>
                         </Route>
                     </Switch>
                 </Router>

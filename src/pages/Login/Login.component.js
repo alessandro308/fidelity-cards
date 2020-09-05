@@ -8,14 +8,11 @@ export default function Login () {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
-    const [loggedIn, setLoggedIn] = useState('false');
 
     const login = (e) => {
         e.preventDefault();
         auth.signInWithEmailAndPassword(email, password)
-        .then(res => {
-            setLoggedIn(true);
-        }).catch(err => {
+        .catch(err => {
             setError(err.message);
         });
     };
