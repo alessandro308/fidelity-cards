@@ -19,6 +19,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "reactfire": "^2.0.3",
+    "recharts": "^1.8.5",
     "ttag": "^1.7.22"
   },
   "scripts": {

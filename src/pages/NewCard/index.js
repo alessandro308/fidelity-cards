@@ -17,18 +17,23 @@ export default function NewCard() {
 
     const onFormSubmit = (event) => {
         event.preventDefault();
-        db.ref('cards').update({
-            [cardNumber]: {
-                email,
-                name,
-                phone,
-                id: cardNumber,
-                operations: [{date: moment(new Date()).format(), value: 0}]
-            },
-        })
+        Promise.all([
+            db.ref('cards').update({
+                [cardNumber]: {
+                    email,
+                    name,
+                    phone,
+                    id: cardNumber,
+                    creationDate: moment(new Date()).format(),
+                },
+            }),
+            db.ref('operations').update({
+                [cardNumber]: [{date: moment(new Date()).format(), value: 0}],
+            }),
+        ])
         .then(res => {
             setRedirect(true);
-        })
+        });
     };
 
     return <Container className="pageContainer">
