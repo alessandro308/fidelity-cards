@@ -8,21 +8,22 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Redirect,
 } from 'react-router-dom';
-import {Container, Navbar, Nav} from 'react-bootstrap';
+import {Container, Navbar, Nav, Spinner} from 'react-bootstrap';
 import {t} from 'ttag';
+import NewCard from './pages/NewCard';
+import {appConfig} from './config/config';
 
 function MainNavbar () {
     const auth = useAuth();
 
     return <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">{t`Fidelity Cards`}</Navbar.Brand>
+        <Navbar.Brand href="#home">{appConfig.appName || t`Fidelity Cards`}</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-                <Nav.Link href="/app">Home</Nav.Link>
-                <Nav.Link href="#link">Link</Nav.Link>
+                <Nav.Link href="/app">{t`Home`}</Nav.Link>
+                <Nav.Link href="/new-card">{t`Create Card`}</Nav.Link>
                 <Nav.Link onClick={() => auth.signOut()}>{t`Logout`}</Nav.Link>
             </Nav>
         </Navbar.Collapse>
@@ -32,7 +33,7 @@ function MainNavbar () {
 function App () {
 
     return (
-        <Suspense fallback={<Container className="pageContainer">Loading</Container>}>
+        <Suspense fallback={<Container className="pageContainer loaderContainer"><Spinner  variant="primary" animation="border"/></Container>}>
             <AuthCheck fallback={<Login/>}>
                 <MainNavbar/>
                 <Router>
@@ -42,6 +43,9 @@ function App () {
                         </Route>
                         <Route path="/app">
                             <CardManagement/>
+                        </Route>
+                        <Route path="/new-card">
+                            <NewCard/>
                         </Route>
                     </Switch>
                 </Router>

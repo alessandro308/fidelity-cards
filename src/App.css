@@ -1,3 +1,9 @@
 .pageContainer {
     margin-top: 20px;
 }
+
+.loaderContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
