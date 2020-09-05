@@ -8,6 +8,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
+    Redirect,
 } from 'react-router-dom';
 import {Container, Navbar, Nav} from 'react-bootstrap';
 import {t} from 'ttag';
