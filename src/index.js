@@ -4,7 +4,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {FirebaseAppProvider} from 'reactfire';
-import {firebaseConfig} from './config/config.template';
+import {firebaseConfig} from './config/config';
+
 ReactDOM.render(
     <React.StrictMode>
         <FirebaseAppProvider firebaseConfig={firebaseConfig}>

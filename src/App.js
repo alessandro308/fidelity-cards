@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Suspense} from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {AuthCheck, useAuth} from 'reactfire';
+import Login from './pages/Login/Login.component';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+} from 'react-router-dom';
+import {Container, Navbar, Nav} from 'react-bootstrap';
+import {t} from 'ttag';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function MainNavbar () {
+    const auth = useAuth();
+
+    return <Navbar bg="light" expand="lg">
+        <Navbar.Brand href="#home">{t`Fidelity Cards`}</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+        <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">
+                <Nav.Link href="/app">Home</Nav.Link>
+                <Nav.Link href="#link">Link</Nav.Link>
+                <Nav.Link onClick={() => auth.signOut()}>{t`Logout`}</Nav.Link>
+            </Nav>
+        </Navbar.Collapse>
+    </Navbar>;
+}
+
+function App () {
+
+    return (
+        <Suspense fallback={<Container className="pageContainer">Loading</Container>}>
+            <AuthCheck fallback={<Login/>}>
+                <MainNavbar/>
+                <Router>
+                    <Switch>
+                        <Route path="/login">
+                            <Login></Login>
+                        </Route>
+                        <Route path="/app">
+                            <div>home</div>
+                        </Route>
+                    </Switch>
+                </Router>
+            </AuthCheck>
+        </Suspense>
+    );
 }
 
 export default App;
