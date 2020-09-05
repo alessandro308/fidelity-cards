@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {sortBy} from 'lodash';
 import {
     Container,
@@ -31,6 +31,15 @@ export default function CardManagement () {
     const [showPointEarnChart, setShowPointEarnChart] = useState(false);
 
     const db = useDatabase();
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const cardId = urlParams.get('id');
+        if (cardId && cardId !== cardNumber) {
+            setCardNumber(cardId);
+            searchCardNumber(cardId);
+        }
+    }, [])
 
     const searchCardNumber = (number) => {
         db.ref('/cards/' + number)
@@ -108,13 +117,6 @@ export default function CardManagement () {
             setCardNumber(undefined);
         });
     };
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const cardId = urlParams.get('id');
-    if (cardId && cardId !== cardNumber) {
-        searchCardNumber(cardId);
-        window.history.replaceState({}, document.title, window.location.href.split('?')[0]);
-    }
 
     const toggleAllOperations = (newVal) => {
         setAllOperations(newVal);
