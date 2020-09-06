@@ -3,6 +3,7 @@ import {
     Container,
     Button,
     Modal,
+    Form,
     Spinner
 } from 'react-bootstrap';
 import {t} from 'ttag';
@@ -15,6 +16,7 @@ export default function ManageDb () {
     const [resetAllCardModal, setResetAllCardModal] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [cards, setCards] = useState([]);
+    const [filter, setFilter] = useState(null);
     const db = useDatabase();
 
     useEffect(() => {
@@ -25,6 +27,13 @@ export default function ManageDb () {
         });
     });
 
+    const filterByName = (event) => {
+        if(event.target.value){
+            setFilter(event.target.value);
+        } else {
+            setFilter(null);
+        }
+    };
     const cleanCards = (minAmountToBeSaved) => {
         /* Downloading a backup file */
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(cards));
@@ -52,13 +61,20 @@ export default function ManageDb () {
 
     return <React.Fragment>
         <Container className="pageContainer">
-            <div style={{display: 'flex', justifyContent: 'center'}}>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             {isLoading ?
 
                 <Spinner animation="border" role="status">
                     <span className="sr-only">{t`Deleting`}</span>
                 </Spinner>
-                : <CardTable cards={cards}/>
+                :
+                <React.Fragment>
+                    <Form.Group controlId="formBasicEmail">
+                        <Form.Label>{t`Filter by name`}</Form.Label>
+                        <Form.Control type="name" placeholder="Nome Cognome" onChange={(e) => filterByName(e)} />
+                    </Form.Group>
+                    <CardTable cards={cards.filter(c => filter ? c.name.toLowerCase().includes(filter.toLowerCase()) : true)}/>
+                </React.Fragment>
             }
             </div>
 

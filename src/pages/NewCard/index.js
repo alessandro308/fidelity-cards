@@ -24,6 +24,9 @@ export default function NewCard () {
     const db = useDatabase();
 
     const onFormSubmit = (event) => {
+        if(!cardNumber){
+            return;
+        }
         event.preventDefault();
         Promise.all([
             db.ref('cards')
@@ -76,7 +79,7 @@ export default function NewCard () {
 
                 <Form.Group controlId="formBasicPhone">
                     <Form.Label>{t`Card Number`}</Form.Label>
-                    <Form.Control type="text" placeholder={t`12345678`} onChange={(event) => setCardNumber(event.target.value)}/>
+                    <Form.Control type="text" placeholder={t`12345678 - Required`} onChange={(event) => setCardNumber(event.target.value)}/>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPhone">

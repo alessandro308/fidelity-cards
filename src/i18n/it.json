@@ -1,0 +1,148 @@
+{
+    "headers": {
+        "plural-forms": "nplurals = 3; plural = (n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2);",
+        "language": "it"
+    },
+    "contexts": {
+        "": {
+            "Fidelity Cards": [
+                "Fidelity Cards"
+            ],
+            "Home": [
+                "Home"
+            ],
+            "Create Card": [
+                "Crea Card"
+            ],
+            "Manage Db": [
+                "Gestisci DB"
+            ],
+            "Logout": [
+                "Logout"
+            ],
+            "Create a new card": [
+                "Crea una nuova card"
+            ],
+            "Name": [
+                "Nome"
+            ],
+            "Name and Last Name": [
+                "Nome e Cognome"
+            ],
+            "Email": [
+                "Email"
+            ],
+            "Enter email": [
+                "Inserisci email"
+            ],
+            "Phone": [
+                "Telefono"
+            ],
+            "Card Number": [
+                "Numero Card"
+            ],
+            "12345678 - Required": [
+                "1234589 - Richiesto"
+            ],
+            "Business": [
+                "Business"
+            ],
+            "Standard": [
+                "Standard"
+            ],
+            "Create": [
+                "Crea"
+            ],
+            "eMail": [
+                "eMail"
+            ],
+            "Type": [
+                "Tipo"
+            ],
+            "Points": [
+                "Punti"
+            ],
+            "Deleting": [
+                "Eliminando..."
+            ],
+            "Filter by name": [
+                "Filtra per nome"
+            ],
+            "Reset Card under ${ appConfig.minAmountAtEndOfTheYear }": [
+                "Azzera Card sotto ${ appConfig.minAmountAtEndOfTheYear } punti"
+            ],
+            "Reset All Card": [
+                "Azzera tutte le card"
+            ],
+            "Do you want to reset cards under 200pt?": [
+                "Vuoi azzerare le card sotto i 200pt?"
+            ],
+            "Cancel": [
+                "Cancella"
+            ],
+            "Delete": [
+                "Elimina"
+            ],
+            "Do you want to reset ALL cards?": [
+                "Vuoi azzerare TUTTE le cards?"
+            ],
+            "Password": [
+                "Password"
+            ],
+            "Submit": [
+                "Invia"
+            ],
+            "In the last 30 days this card has earned ${ lastMonthPoint } points": [
+                "Negli ultimi 30 giorni, questa card ha accomulato ${ lastMonthPoint } punti"
+            ],
+            "Card #${ cardNumber } successfully deleted": [
+                "Card #${ cardNumber } aggiunta con successo"
+            ],
+            "Creation Date": [
+                "Data di creazione"
+            ],
+            "See card trend": [
+                "Guarda l'andamento"
+            ],
+            "Date": [
+                "Data"
+            ],
+            "Action": [
+                "Azione"
+            ],
+            "Applied Discount": [
+                "Applica sconto"
+            ],
+            "Card Creation": [
+                "Creazione Card"
+            ],
+            "Show complete history": [
+                "Mostra lo storico completa"
+            ],
+            "Show only latest entries": [
+                "Mostra solo gli ultimi movimenti"
+            ],
+            "Use Discount": [
+                "Usa sconto"
+            ],
+            "Add points": [
+                "Aggiungi Punti"
+            ],
+            "Point to add": [
+                "Punti da aggiungere"
+            ],
+            "Close": [
+                "Chiudi"
+            ],
+            "Do you want to delete the card #${ cardNumber }?": [
+                "Vuoi eliminare la card #${ cardNumber }?"
+            ],
+            "Apply discount to card #${ cardNumber }?": [
+                "Vuoi applicare lo sconto alla card #${ cardNumber }?"
+            ],
+            "Use": [
+                "Usa"
+            ]
+        }
+    }
+}

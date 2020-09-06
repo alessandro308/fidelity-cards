@@ -7,6 +7,206 @@ msgstr ""
 "mime-version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/App.js:14
-msgid "home"
+#: src/App.js:25
+msgid "Fidelity Cards"
+msgstr ""
+
+#: src/App.js:29
+msgid "Home"
+msgstr ""
+
+#: src/App.js:30
+msgid "Create Card"
+msgstr ""
+
+#: src/App.js:31
+msgid "Manage Db"
+msgstr ""
+
+#: src/App.js:32
+msgid "Logout"
+msgstr ""
+
+#: src/pages/NewCard/index.js:62
+msgid "Create a new card"
+msgstr ""
+
+#: src/pages/ManageDb/CardTable.js:19
+#: src/pages/NewCard/index.js:66
+msgid "Name"
+msgstr ""
+
+#: src/pages/NewCard/index.js:67
+msgid "Name and Last Name"
+msgstr ""
+
+#: src/pages/NewCard/index.js:71
+msgid "Email"
+msgstr ""
+
+#: src/pages/Login/Login.component.js:40
+#: src/pages/NewCard/index.js:72
+msgid "Enter email"
+msgstr ""
+
+#: src/pages/ManageDb/CardTable.js:20
+#: src/pages/NewCard/index.js:76
+#: src/pages/NewCard/index.js:77
+msgid "Phone"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:157
+#: src/pages/NewCard/index.js:81
+msgid "Card Number"
+msgstr ""
+
+#: src/pages/NewCard/index.js:82
+msgid "12345678 - Required"
+msgstr ""
+
+#: src/pages/NewCard/index.js:87
+msgid "Business"
+msgstr ""
+
+#: src/pages/NewCard/index.js:88
+msgid "Standard"
+msgstr ""
+
+#: src/pages/NewCard/index.js:93
+msgid "Create"
+msgstr ""
+
+#: src/pages/ManageDb/CardTable.js:21
+msgid "eMail"
+msgstr ""
+
+#: src/pages/ManageDb/CardTable.js:22
+msgid "Type"
+msgstr ""
+
+#: src/pages/ManageDb/CardTable.js:23
+msgid "Points"
+msgstr ""
+
+#: src/pages/ManageDb/index.js:68
+msgid "Deleting"
+msgstr ""
+
+#: src/pages/ManageDb/index.js:73
+msgid "Filter by name"
+msgstr ""
+
+#: src/pages/ManageDb/index.js:81
+#, javascript-format
+msgid "Reset Card under ${ appConfig.minAmountAtEndOfTheYear }"
+msgstr ""
+
+#: src/pages/ManageDb/index.js:83
+msgid "Reset All Card"
+msgstr ""
+
+#: src/pages/ManageDb/index.js:90
+msgid "Do you want to reset cards under 200pt?"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:254
+#: src/pages/CardManagement/index.js:283
+#: src/pages/ManageDb/index.js:94
+#: src/pages/ManageDb/index.js:105
+msgid "Cancel"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:204
+#: src/pages/CardManagement/index.js:255
+#: src/pages/ManageDb/index.js:95
+#: src/pages/ManageDb/index.js:106
+msgid "Delete"
+msgstr ""
+
+#: src/pages/ManageDb/index.js:101
+msgid "Do you want to reset ALL cards?"
+msgstr ""
+
+#: src/pages/Login/Login.component.js:45
+msgid "Password"
+msgstr ""
+
+#: src/pages/Login/Login.component.js:48
+msgid "Submit"
+msgstr ""
+
+#: src/pages/CardManagement/CardChart.js:34
+#, javascript-format
+msgid "In the last 30 days this card has earned ${ lastMonthPoint } points"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:154
+msgid "Card #${ cardNumber } successfully deleted"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:172
+msgid "Creation Date"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:178
+msgid "See card trend"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:184
+msgid "Date"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:185
+msgid "Action"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:197
+msgid "Applied Discount"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:197
+msgid "Card Creation"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:206
+msgid "Show complete history"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:207
+msgid "Show only latest entries"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:211
+msgid "Use Discount"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:224
+msgid "Add points"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:235
+#: src/pages/CardManagement/index.js:236
+msgid "Point to add"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:243
+msgid "Close"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:244
+msgid "Add point"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:250
+#, javascript-format
+msgid "Do you want to delete the card #${ cardNumber }?"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:261
+#, javascript-format
+msgid "Apply discount to card #${ cardNumber }?"
+msgstr ""
+
+#: src/pages/CardManagement/index.js:284
+msgid "Use"
 msgstr ""

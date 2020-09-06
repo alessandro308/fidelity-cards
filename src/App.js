@@ -12,11 +12,17 @@ import {
     Link,
 } from 'react-router-dom';
 import {Container, Navbar, Nav, Spinner} from 'react-bootstrap';
-import {t} from 'ttag';
+import {t, addLocale, useLocale} from 'ttag';
 import NewCard from './pages/NewCard';
 import ManageDb from './pages/ManageDb';
 
+import translation from './i18n/it.json';
 import {appConfig} from './config/config';
+
+addLocale('it', translation);
+useLocale('it');
+
+
 
 function MainNavbar () {
     const auth = useAuth();
@@ -40,7 +46,7 @@ function App () {
     return (
         <Suspense fallback={<Container className="pageContainer loaderContainer"><Spinner  variant="primary" animation="border"/></Container>}>
             <AuthCheck fallback={<Login/>}>
-                <BrowserRouter>
+                <BrowserRouter basename='/cards/'>
                     <MainNavbar/>
                     <Switch>
                         <Route path="/login">

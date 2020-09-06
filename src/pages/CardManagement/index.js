@@ -55,7 +55,7 @@ export default function CardManagement () {
             setCardNumber(cardId);
             searchCardNumber(cardId);
         }
-    }, [cardNumber, searchCardNumber]);
+    }, []);
 
 
     const getOperations = (number) => {
@@ -153,12 +153,10 @@ export default function CardManagement () {
             {cardDeleted ? <Alert variant="danger">
                 {t`Card #${cardNumber} successfully deleted`}
             </Alert> : null}
-            <Form>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>{t`Card Number`}</Form.Label>
-                    <Form.Control value={cardNumber} placeholder="Scan the card code" onChange={onCardNumberChange}/>
-                </Form.Group>
-            </Form>
+            <Form.Group controlId="formBasicEmail">
+                <Form.Label>{t`Card Number`}</Form.Label>
+                <Form.Control value={cardNumber} placeholder={t`Scan the card code`} onChange={onCardNumberChange}/>
+            </Form.Group>
             {card && card.id === cardNumber ?
                 <Jumbotron>
                     <h1 style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -243,7 +241,7 @@ export default function CardManagement () {
 
             <Modal.Footer>
                 <Button variant="secondary" onClick={() => setModalOpen(false)}>{t`Close`}</Button>
-                <Button variant="primary" onClick={() => addPoint()}>{t`Add point`}</Button>
+                <Button variant="primary" onClick={() => addPoint()}>{t`Add points`}</Button>
             </Modal.Footer>
         </Modal>
 
