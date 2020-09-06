@@ -12,7 +12,8 @@ import CardTable from './CardTable';
 
 export default function ManageDb () {
     const [resetCardModal, setResetCardModal] = useState(false);
-    const [isDeleting, setIsDeleting] = useState(false);
+    const [resetAllCardModal, setResetAllCardModal] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [cards, setCards] = useState([]);
     const db = useDatabase();
 
@@ -20,33 +21,53 @@ export default function ManageDb () {
         db.ref('/cards').once('value')
         .then((snapshot) => {
             setCards(snapshot.val())
+            setIsLoading(false);
         });
     });
 
-    const cleanCards = () => {
-        setIsDeleting(true);
+    const cleanCards = (minAmountToBeSaved) => {
+        /* Downloading a backup file */
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(cards));
+        const dlAnchorElem = document.getElementById('downloadAnchorElem');
+        dlAnchorElem.setAttribute("href", dataStr);
+        dlAnchorElem.setAttribute("download", "backup_keep_it_safe.json");
+        dlAnchorElem.click();
+
         for(let card of Object.values(cards)){
-            if(card.total < appConfig.minAmountAtEndOfTheYear) {
-                db.ref(`/operations/${card.id}`)
-                .remove();
+            if(minAmountToBeSaved) {
+                if(card.total < minAmountToBeSaved) {
+                    db.ref(`/operations/${card.id}`)
+                    .remove();
+                    db.ref(`/cards/${card.id}/total`).set(0);
+                }
+            } else {
+                db.ref(`/operations/${card.id}`).remove();
+                db.ref(`/cards/${card.id}/total`).set(0);
             }
         }
 
-        setIsDeleting(false)
         setResetCardModal(false);
+        setResetAllCardModal(false);
     };
 
     return <React.Fragment>
         <Container className="pageContainer">
-            {isDeleting ?
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+            {isLoading ?
+
                 <Spinner animation="border" role="status">
                     <span className="sr-only">{t`Deleting`}</span>
                 </Spinner>
-                : null
+                : <CardTable cards={cards}/>
             }
-            <CardTable cards={cards}/>
-            <Button onClick={() => setResetCardModal(true)}>{t`Reset Card under ${appConfig.minAmountAtEndOfTheYear}`}</Button>
+            </div>
+
+            <Button onClick={() => setResetCardModal(true)} variant='danger'>{t`Reset Card under ${appConfig.minAmountAtEndOfTheYear}`}</Button>
+            {' '}
+            <Button onClick={() => setResetAllCardModal(true)} variant='danger'>{t`Reset All Card`}</Button>
         </Container>
+
+        <a id="downloadAnchorElem" style={{display:'none'}}/>
 
         <Modal show={resetCardModal} onHide={() => setResetCardModal(false)} centered>
             <Modal.Header closeButton>
@@ -55,6 +76,17 @@ export default function ManageDb () {
 
             <Modal.Footer>
                 <Button variant="secondary" onClick={() => setResetCardModal(false)}>{t`Cancel`}</Button>
+                <Button variant="danger" onClick={() => cleanCards(appConfig.minAmountAtEndOfTheYear)}>{t`Delete`}</Button>
+            </Modal.Footer>
+        </Modal>
+
+        <Modal show={resetAllCardModal} onHide={() => setResetAllCardModal(false)} centered>
+            <Modal.Header closeButton>
+                <Modal.Title>{t`Do you want to reset ALL cards?`}</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Footer>
+                <Button variant="secondary" onClick={() => setResetAllCardModal(false)}>{t`Cancel`}</Button>
                 <Button variant="danger" onClick={() => cleanCards()}>{t`Delete`}</Button>
             </Modal.Footer>
         </Modal>

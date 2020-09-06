@@ -146,7 +146,7 @@ export default function CardManagement () {
     const total = operations.map(a => parseInt(a.value))
     .reduce((a, b) => a + b, 0);
 
-    const discountType = appConfig.discounts[card?.type];
+    const discountType = appConfig.discounts[card?.type ?? 'business'];
 
     return <React.Fragment>
         <Container className="pageContainer">
