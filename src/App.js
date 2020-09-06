@@ -5,7 +5,7 @@ import {AuthCheck, useAuth} from 'reactfire';
 import Login from './pages/Login/Login.component';
 import CardManagement from './pages/CardManagement';
 import {
-    HashRouter,
+    Redirect,
     BrowserRouter,
     Switch,
     Route,
@@ -54,6 +54,9 @@ function App () {
                         </Route>
                         <Route path="/manage-db">
                             <ManageDb/>
+                        </Route>
+                        <Route exact path="/">
+                            <Redirect to="/app" />
                         </Route>
                     </Switch>
                 </BrowserRouter>

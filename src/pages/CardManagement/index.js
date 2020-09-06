@@ -164,7 +164,7 @@ export default function CardManagement () {
                     <h1 style={{display: 'flex', justifyContent: 'space-between'}}>
                         <span>
                             {card.name} {card?.type === 'business' ? <Badge
-                            variant="primary"><FontAwesomeIcon icon={faStar}></FontAwesomeIcon> Business</Badge> : null}
+                            variant="primary"><FontAwesomeIcon icon={faStar}></FontAwesomeIcon> Business</Badge> : <Badge variant="secondary">Standard</Badge>}
                         </span><Badge
                         variant="primary">{total}</Badge></h1>
                     <p>
