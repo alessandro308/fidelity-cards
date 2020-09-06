@@ -17,7 +17,7 @@ import {
 import {t} from 'ttag';
 import {useDatabase} from 'reactfire';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPlus} from '@fortawesome/free-solid-svg-icons';
+import {faPlus, faStar} from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import CardChart from './CardChart';
 import {appConfig} from '../../config/config';
@@ -161,7 +161,11 @@ export default function CardManagement () {
             </Form>
             {card && card.id === cardNumber ?
                 <Jumbotron>
-                    <h1 style={{display: 'flex', justifyContent: 'space-between'}}>{card.name} <Badge
+                    <h1 style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <span>
+                            {card.name} {card?.type === 'business' ? <Badge
+                            variant="primary"><FontAwesomeIcon icon={faStar}></FontAwesomeIcon> Business</Badge> : null}
+                        </span><Badge
                         variant="primary">{total}</Badge></h1>
                     <p>
                         <span>{card.email}</span>{card.email && card.phone ? <span> - </span> : null}<span>{card.phone}</span>

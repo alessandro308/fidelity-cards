@@ -20,7 +20,7 @@ export default function ManageDb () {
     useEffect(() => {
         db.ref('/cards').once('value')
         .then((snapshot) => {
-            setCards(snapshot.val())
+            setCards(Object.values(snapshot.val()))
             setIsLoading(false);
         });
     });

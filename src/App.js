@@ -5,9 +5,11 @@ import {AuthCheck, useAuth} from 'reactfire';
 import Login from './pages/Login/Login.component';
 import CardManagement from './pages/CardManagement';
 import {
-    BrowserRouter as Router,
+    HashRouter,
+    BrowserRouter,
     Switch,
     Route,
+    Link,
 } from 'react-router-dom';
 import {Container, Navbar, Nav, Spinner} from 'react-bootstrap';
 import {t} from 'ttag';
@@ -24,9 +26,9 @@ function MainNavbar () {
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-                <Nav.Link href="/app">{t`Home`}</Nav.Link>
-                <Nav.Link href="/new-card">{t`Create Card`}</Nav.Link>
-                <Nav.Link href="/manage-db">{t`Manage Db`}</Nav.Link>
+                <Nav.Link><Link to={{pathname: '/app'}}>{t`Home`}</Link></Nav.Link>
+                <Nav.Link><Link to={{pathname: '/new-card'}}>{t`Create Card`}</Link></Nav.Link>
+                <Nav.Link><Link to={{pathname: '/manage-db'}}>{t`Manage Db`}</Link></Nav.Link>
                 <Nav.Link onClick={() => auth.signOut()}>{t`Logout`}</Nav.Link>
             </Nav>
         </Navbar.Collapse>
@@ -38,8 +40,8 @@ function App () {
     return (
         <Suspense fallback={<Container className="pageContainer loaderContainer"><Spinner  variant="primary" animation="border"/></Container>}>
             <AuthCheck fallback={<Login/>}>
-                <MainNavbar/>
-                <Router>
+                <BrowserRouter>
+                    <MainNavbar/>
                     <Switch>
                         <Route path="/login">
                             <Login></Login>
@@ -54,7 +56,7 @@ function App () {
                             <ManageDb/>
                         </Route>
                     </Switch>
-                </Router>
+                </BrowserRouter>
             </AuthCheck>
         </Suspense>
     );

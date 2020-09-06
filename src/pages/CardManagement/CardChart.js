@@ -31,7 +31,7 @@ export default function CardChart (props) {
     .map(([date, value]) => ({date, value})), e => e.date);
 
     return <div style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        <h2>{t`In the last month that card has earn ${lastMonthPoint} points`}</h2>
+        <h2>{t`In the last 30 days this card has earned ${lastMonthPoint} points`}</h2>
         <LineChart width={800} height={300} data={data}>
             <Line type="monotone" dataKey="value" stroke="#8884d8"/>
             <CartesianGrid stroke="#ccc"/>

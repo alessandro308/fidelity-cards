@@ -12,7 +12,6 @@ export default function CardTable (props) {
     const navigateToCard = (id) => {
         history.push(`/app?id=${id}`);
     };
-
     return <Table striped bordered hover>
                 <thead>
                 <tr>
