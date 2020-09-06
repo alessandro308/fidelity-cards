@@ -12,6 +12,8 @@ import {
 import {Container, Navbar, Nav, Spinner} from 'react-bootstrap';
 import {t} from 'ttag';
 import NewCard from './pages/NewCard';
+import ManageDb from './pages/ManageDb';
+
 import {appConfig} from './config/config';
 
 function MainNavbar () {
@@ -24,6 +26,7 @@ function MainNavbar () {
             <Nav className="mr-auto">
                 <Nav.Link href="/app">{t`Home`}</Nav.Link>
                 <Nav.Link href="/new-card">{t`Create Card`}</Nav.Link>
+                <Nav.Link href="/manage-db">{t`Manage Db`}</Nav.Link>
                 <Nav.Link onClick={() => auth.signOut()}>{t`Logout`}</Nav.Link>
             </Nav>
         </Navbar.Collapse>
@@ -46,6 +49,9 @@ function App () {
                         </Route>
                         <Route path="/new-card">
                             <NewCard/>
+                        </Route>
+                        <Route path="/manage-db">
+                            <ManageDb/>
                         </Route>
                     </Switch>
                 </Router>

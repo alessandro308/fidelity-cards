@@ -11,6 +11,8 @@ import {
     FormControl,
     Alert,
     InputGroup,
+    ToggleButton,
+    ToggleButtonGroup,
 } from 'react-bootstrap';
 import {t} from 'ttag';
 import {useDatabase} from 'reactfire';
@@ -18,6 +20,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlus} from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import CardChart from './CardChart';
+import {appConfig} from '../../config/config';
 
 export default function CardManagement () {
     const [cardNumber, setCardNumber] = useState(undefined);
@@ -25,21 +28,14 @@ export default function CardManagement () {
     const [operations, setOperations] = useState([]);
     const [cardDeleted, setCardDeleted] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
+    const [discountModalOpen, setDiscountModalOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [allOperations, setAllOperations] = useState(false);
     const [addedPoint, setAddedPoint] = useState(0);
     const [showPointEarnChart, setShowPointEarnChart] = useState(false);
+    const [discountToApply, setDiscountToApply] = useState(null);
 
     const db = useDatabase();
-
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const cardId = urlParams.get('id');
-        if (cardId && cardId !== cardNumber) {
-            setCardNumber(cardId);
-            searchCardNumber(cardId);
-        }
-    }, [])
 
     const searchCardNumber = (number) => {
         db.ref('/cards/' + number)
@@ -49,15 +45,21 @@ export default function CardManagement () {
                 setCard(cardResult);
             }
         });
-        getOperations(number, !allOperations);
+        getOperations(number);
     };
 
-    const getOperations = (number, isLimited) => {
-        let ref = db.ref('/operations/' + number);
-        if (isLimited) {
-            ref = ref.limitToLast(10);
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const cardId = urlParams.get('id');
+        if (cardId && cardId !== cardNumber) {
+            setCardNumber(cardId);
+            searchCardNumber(cardId);
         }
-        ref
+    }, [cardNumber, searchCardNumber]);
+
+
+    const getOperations = (number) => {
+        db.ref('/operations/' + number)
         .on('value', (snapshot) => {
             if (snapshot.val()) {
                 setOperations(Object.values(snapshot.val())
@@ -92,6 +94,8 @@ export default function CardManagement () {
             .push();
             newOperation.key = newOperationRef.key;
             newOperationRef.set(newOperation);
+
+            db.ref(`/cards/${cardNumber}/total`).set(parseInt(total) + parseInt(addedPoint))
         } catch (e) {
             console.log(e);
         }
@@ -120,8 +124,29 @@ export default function CardManagement () {
 
     const toggleAllOperations = (newVal) => {
         setAllOperations(newVal);
-        getOperations(cardNumber, !newVal);
     };
+
+    const applyDiscount = () => {
+        let newOperation = {
+            date: moment(new Date()).format(),
+            value: -discountToApply,
+        };
+        try {
+            let newOperationRef = db.ref(`/operations/${cardNumber}`)
+            .push();
+            newOperation.key = newOperationRef.key;
+            newOperationRef.set(newOperation);
+        } catch (e) {
+            console.log(e);
+        }
+
+        setDiscountModalOpen(false);
+    };
+
+    const total = operations.map(a => parseInt(a.value))
+    .reduce((a, b) => a + b, 0);
+
+    const discountType = appConfig.discounts[card?.type];
 
     return <React.Fragment>
         <Container className="pageContainer">
@@ -137,7 +162,7 @@ export default function CardManagement () {
             {card && card.id === cardNumber ?
                 <Jumbotron>
                     <h1 style={{display: 'flex', justifyContent: 'space-between'}}>{card.name} <Badge
-                        variant="primary">{card.totalPoints}</Badge></h1>
+                        variant="primary">{total}</Badge></h1>
                     <p>
                         <span>{card.email}</span>{card.email && card.phone ? <span> - </span> : null}<span>{card.phone}</span>
                     </p>
@@ -147,8 +172,8 @@ export default function CardManagement () {
                     </p>
 
                     {showPointEarnChart ?
-                        <CardChart cardNumber={cardNumber}/> :
-                        <Button variant="info" onClick={() => setShowPointEarnChart(true)}>{t`See trending`}</Button>
+                        <CardChart operations={operations}/> :
+                        <Button style={{marginBottom: "10px"}} variant="info" onClick={() => setShowPointEarnChart(true)}>{t`See card trend`}</Button>
                     }
 
                     <Table striped bordered hover>
@@ -166,7 +191,8 @@ export default function CardManagement () {
                             .map((o) => <tr key={o.date + o.value + o.key}>
                                 <td>{moment(o.date)
                                 .format('YY-MM-DD - HH:MM')}</td>
-                                <td>{o.value ? o.value : t`Card Creation`}</td>
+                                <td>{o.value !== 0 ? ((o.value < 0) ?
+                                    <Badge variant="primary">{t`Applied Discount`} - {Math.abs(o.value)/(discountType.at/discountType.value)}€</Badge> : o.value) : t`Card Creation`}</td>
                             </tr>)
                         }
                         </tbody>
@@ -179,7 +205,7 @@ export default function CardManagement () {
                                 : t`Show only latest entries`}</Button>
                         </div>
                         <div>
-                            <Button variant="info" onClick={() => openModal()}>
+                            <Button variant="info" disabled={total < discountType.at} onClick={() => setDiscountModalOpen(true)}>
                                 {t`Use Discount`}
                             </Button>
                             {' '}
@@ -225,6 +251,35 @@ export default function CardManagement () {
             <Modal.Footer>
                 <Button variant="secondary" onClick={() => setDeleteModalOpen(false)}>{t`Cancel`}</Button>
                 <Button variant="danger" onClick={() => deleteCard(cardNumber)}>{t`Delete`}</Button>
+            </Modal.Footer>
+        </Modal>
+
+        <Modal show={discountModalOpen} onHide={() => setDiscountModalOpen(false)} centered>
+            <Modal.Header closeButton>
+                <Modal.Title>{t`Apply discount to card #${cardNumber}?`}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <ToggleButtonGroup type="radio" value={discountToApply} name="discountToApply" onChange={(e) => setDiscountToApply(e)}>
+                    {card ? new Array(Math.floor(total / discountType.at)).fill(0)
+                    .map((_, idx) => {
+                        const value = discountType.at*(idx+1);
+                        return <ToggleButton
+                            key={idx}
+                            variant={discountToApply === value ? 'primary' : 'secondary'}
+                            name="discountToApply"
+                            value={value}
+                            checked={discountToApply === value}
+                            onChange={(e) => setDiscountToApply(e.currentTarget.value)}
+                        >
+                            {discountType.value*(idx+1)}€
+                        </ToggleButton>;
+                    }) : null}
+                </ToggleButtonGroup>
+            </Modal.Body>
+
+            <Modal.Footer>
+                <Button variant="secondary" onClick={() => setDiscountModalOpen(false)}>{t`Cancel`}</Button>
+                <Button variant="primary" onClick={() => applyDiscount()}>{t`Use`}</Button>
             </Modal.Footer>
         </Modal>
 

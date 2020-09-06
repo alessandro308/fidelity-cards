@@ -1,16 +1,24 @@
 import React, {useState} from 'react';
-import {Button, Container, Jumbotron, Form} from 'react-bootstrap';
+import {
+    Button,
+    Container,
+    Jumbotron,
+    Form,
+    ToggleButtonGroup,
+    ToggleButton,
+} from 'react-bootstrap';
 import {t} from 'ttag';
 import {useDatabase} from 'reactfire';
 import {Redirect} from 'react-router-dom';
 import moment from 'moment';
 
-export default function NewCard() {
+export default function NewCard () {
 
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [cardNumber, setCardNumber] = useState('');
+    const [cardType, setCardType] = useState('business');
     const [redirect, setRedirect] = useState(false);
 
     const db = useDatabase();
@@ -18,17 +26,26 @@ export default function NewCard() {
     const onFormSubmit = (event) => {
         event.preventDefault();
         Promise.all([
-            db.ref('cards').update({
+            db.ref('cards')
+            .update({
                 [cardNumber]: {
                     email,
                     name,
                     phone,
+                    type: cardType,
                     id: cardNumber,
-                    creationDate: moment(new Date()).format(),
+                    creationDate: moment(new Date())
+                    .format(),
                 },
             }),
-            db.ref('operations').update({
-                [cardNumber]: [{date: moment(new Date()).format(), value: 0}],
+            db.ref('operations')
+            .update({
+                [cardNumber]: [
+                    {
+                        date: moment(new Date())
+                        .format(), value: 0,
+                    },
+                ],
             }),
         ])
         .then(res => {
@@ -62,10 +79,17 @@ export default function NewCard() {
                     <Form.Control type="text" placeholder={t`12345678`} onChange={(event) => setCardNumber(event.target.value)}/>
                 </Form.Group>
 
+                <Form.Group controlId="formBasicPhone">
+                    <ToggleButtonGroup type="radio" name="card-type" value={cardType} onChange={setCardType}>
+                        <ToggleButton variant="secondary" value="business">{t`Business`}</ToggleButton>
+                        <ToggleButton variant="secondary" value="standard">{t`Standard`}</ToggleButton>
+                    </ToggleButtonGroup>
+                </Form.Group>
+
                 <Button variant="primary" type="submit">
                     {t`Create`}
                 </Button>
             </Form>
         </Jumbotron>
-    </Container>
+    </Container>;
 }

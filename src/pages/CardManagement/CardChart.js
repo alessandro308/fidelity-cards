@@ -1,28 +1,25 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import moment from 'moment';
 import {sortBy} from 'lodash';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
-
-import {useDatabase} from 'reactfire';
+import {t} from 'ttag';
+import {LineChart, Line, CartesianGrid, XAxis, YAxis} from 'recharts';
 
 export default function CardChart (props) {
-    const db = useDatabase();
-    let [operations, setOperations] = useState([]);
+    console.log(props.operations
+    .filter(e => moment().diff(moment(e.date), 'days') < 30))
+    let lastMonthPoint = props.operations
+    .filter(e => moment().diff(moment(e.date), 'days') < 30 && e.value > 0)
+    .map(op => op.value)
+    .reduce((a, b) => a + b, 0);
 
-
-    useEffect(() => {
-        db.ref('/operations/' + props.cardNumber)
-        .on('value', (snapshot) => {
-            if(snapshot.val()){
-                setOperations(Object.values(snapshot.val()).filter(e => e.value !== 0));
-            }
-        });
-    }, []);
-
-    let reducedData = operations
-    .map(e => ({date: moment(e.date).format('YYYY-MM'), value: e.value}))
+    let reducedData = props.operations
+    .filter(e => e.value > 0)
+    .map(e => ({
+        date: moment(e.date)
+        .format('YYYY-MM'), value: e.value,
+    }))
     .reduce((acc, val) => {
-        if(acc[val.date]){
+        if (acc[val.date]) {
             acc[val.date] += val.value;
         } else {
             acc[val.date] = val.value;
@@ -30,12 +27,17 @@ export default function CardChart (props) {
         return acc;
     }, {});
 
-    let data = sortBy(Object.entries(reducedData).map(([date, value]) => ({date, value})), e => e.date);
+    let data = sortBy(Object.entries(reducedData)
+    .map(([date, value]) => ({date, value})), e => e.date);
 
-    return <LineChart width={800} height={300} data={data}>
-        <Line type="monotone" dataKey="value" stroke="#8884d8" />
-        <CartesianGrid stroke="#ccc" />
-        <XAxis dataKey="date" />
-        <YAxis />
-    </LineChart>
+    return <div style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <h2>{t`In the last month that card has earn ${lastMonthPoint} points`}</h2>
+        <LineChart width={800} height={300} data={data}>
+            <Line type="monotone" dataKey="value" stroke="#8884d8"/>
+            <CartesianGrid stroke="#ccc"/>
+            <XAxis dataKey="date"/>
+            <YAxis/>
+        </LineChart>
+    </div>;
+
 }
