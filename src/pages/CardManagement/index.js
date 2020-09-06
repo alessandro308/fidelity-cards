@@ -155,7 +155,9 @@ export default function CardManagement () {
             </Alert> : null}
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>{t`Card Number`}</Form.Label>
-                <Form.Control value={cardNumber} placeholder={t`Scan the card code`} onChange={onCardNumberChange}/>
+                <Form.Control value={cardNumber} placeholder={t`Scan the card code`}
+                              onFocus={ () => onCardNumberChange({target: {value: ""}}) }
+                              onChange={onCardNumberChange}/>
             </Form.Group>
             {card && card.id === cardNumber ?
                 <Jumbotron>
