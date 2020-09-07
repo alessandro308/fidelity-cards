@@ -93,7 +93,7 @@
                 "Invia"
             ],
             "In the last 30 days this card has earned ${ lastMonthPoint } points": [
-                "Negli ultimi 30 giorni, questa card ha accomulato ${ lastMonthPoint } punti"
+                "Negli ultimi 30 giorni, questa card sono stati aggiunti ${ lastMonthPoint } punti"
             ],
             "Card #${ cardNumber } successfully deleted": [
                 "Card #${ cardNumber } aggiunta con successo"
