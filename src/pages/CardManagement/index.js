@@ -13,6 +13,7 @@ import {
     InputGroup,
     ToggleButton,
     ToggleButtonGroup,
+    Spinner,
 } from 'react-bootstrap';
 import {t} from 'ttag';
 import {useDatabase} from 'reactfire';
@@ -25,7 +26,7 @@ import {appConfig} from '../../config/config';
 export default function CardManagement () {
     const [cardNumber, setCardNumber] = useState(undefined);
     const [card, setCard] = useState(null);
-    const [operations, setOperations] = useState([]);
+    const [operations, setOperations] = useState(null);
     const [cardDeleted, setCardDeleted] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const [discountModalOpen, setDiscountModalOpen] = useState(false);
@@ -142,9 +143,11 @@ export default function CardManagement () {
 
         setDiscountModalOpen(false);
     };
-
-    const total = operations.map(a => parseInt(a.value))
-    .reduce((a, b) => a + b, 0);
+    let total = null;
+    if(operations){
+        total = operations.map(a => parseInt(a.value))
+        .reduce((a, b) => a + b, 0);
+    }
 
     const discountType = appConfig.discounts[card?.type ?? 'business'];
 
@@ -166,7 +169,7 @@ export default function CardManagement () {
                             {card.name} {card?.type === 'business' ? <Badge
                             variant="primary"><FontAwesomeIcon icon={faStar}></FontAwesomeIcon> Business</Badge> : <Badge variant="secondary">Standard</Badge>}
                         </span><Badge
-                        variant="primary">{total}</Badge></h1>
+                        variant="primary">{total == null ? <Spinner animation="border" /> : total}</Badge></h1>
                     <p>
                         <span>{card.email}</span>{card.email && card.phone ? <span> - </span> : null}<span>{card.phone}</span>
                     </p>
