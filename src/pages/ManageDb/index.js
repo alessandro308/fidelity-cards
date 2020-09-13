@@ -20,12 +20,19 @@ export default function ManageDb () {
     const db = useDatabase();
 
     useEffect(() => {
-        db.ref('/cards').once('value')
-        .then((snapshot) => {
-            setCards(Object.values(snapshot.val()))
+        if(!localStorage.getItem('fidelityCardList')){
+            db.ref('/cards').once('value')
+            .then((snapshot) => {
+                let cards = Object.values(snapshot.val());
+                setCards(cards)
+                localStorage.setItem('fidelityCardList', JSON.stringify(cards));
+                setIsLoading(false);
+            });
+        } else {
+            setCards(JSON.parse(localStorage.getItem('fidelityCardList')));
             setIsLoading(false);
-        });
-    });
+        }
+    }, []);
 
     const filterByName = (event) => {
         if(event.target.value){
@@ -63,7 +70,6 @@ export default function ManageDb () {
         <Container className="pageContainer">
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             {isLoading ?
-
                 <Spinner animation="border" role="status">
                     <span className="sr-only">{t`Deleting`}</span>
                 </Spinner>
@@ -71,7 +77,7 @@ export default function ManageDb () {
                 <React.Fragment>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>{t`Filter by name`}</Form.Label>
-                        <Form.Control type="name" placeholder="Nome Cognome" onChange={(e) => filterByName(e)} />
+                        <Form.Control type="name" placeholder={t`Customer Name`} onChange={(e) => filterByName(e)} />
                     </Form.Group>
                     <CardTable cards={cards.filter(c => filter ? c.name.toLowerCase().includes(filter.toLowerCase()) : true)}/>
                 </React.Fragment>

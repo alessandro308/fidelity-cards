@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {AuthCheck, useAuth} from 'reactfire';
 import Login from './pages/Login/Login.component';
 import CardManagement from './pages/CardManagement';
+import Generate from './pages/Generation';
 import {
     Redirect,
     BrowserRouter,
@@ -28,13 +29,14 @@ function MainNavbar () {
     const auth = useAuth();
 
     return <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">{appConfig.appName || t`Fidelity Cards`}</Navbar.Brand>
+        <Navbar.Brand href="#home">{appConfig.appName || t`Fidelity Cards`} (v0.3)</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
                 <Nav.Link><Link to={{pathname: '/app'}}>{t`Home`}</Link></Nav.Link>
                 <Nav.Link><Link to={{pathname: '/new-card'}}>{t`Create Card`}</Link></Nav.Link>
                 <Nav.Link><Link to={{pathname: '/manage-db'}}>{t`Manage Db`}</Link></Nav.Link>
+                <Nav.Link><Link to={{pathname: '/generate'}}>{t`Generate Labels`}</Link></Nav.Link>
                 <Nav.Link onClick={() => auth.signOut()}>{t`Logout`}</Nav.Link>
             </Nav>
         </Navbar.Collapse>
@@ -60,6 +62,9 @@ function App () {
                         </Route>
                         <Route path="/manage-db">
                             <ManageDb/>
+                        </Route>
+                        <Route path="/generate">
+                            <Generate/>
                         </Route>
                         <Route exact path="/">
                             <Redirect to="/app" />

@@ -53,6 +53,7 @@ export default function NewCard () {
         ])
         .then(res => {
             setRedirect(true);
+            localStorage.removeItem('fidelityCardList');
         });
     };
 
@@ -86,6 +87,7 @@ export default function NewCard () {
                     <ToggleButtonGroup type="radio" name="card-type" value={cardType} onChange={setCardType}>
                         <ToggleButton variant="secondary" value="business">{t`Business`}</ToggleButton>
                         <ToggleButton variant="secondary" value="standard">{t`Standard`}</ToggleButton>
+                        <ToggleButton variant="secondary" value="gift">{t`Gift Card`}</ToggleButton>
                     </ToggleButtonGroup>
                 </Form.Group>
 

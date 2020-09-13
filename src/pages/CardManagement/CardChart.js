@@ -5,8 +5,6 @@ import {t} from 'ttag';
 import {LineChart, Line, CartesianGrid, XAxis, YAxis} from 'recharts';
 
 export default function CardChart (props) {
-    console.log(props.operations
-    .filter(e => moment().diff(moment(e.date), 'days') < 30))
     let lastMonthPoint = props.operations
     .filter(e => moment().diff(moment(e.date), 'days') < 30 && e.value > 0)
     .map(op => op.value)
