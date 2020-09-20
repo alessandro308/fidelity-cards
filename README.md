@@ -47,6 +47,19 @@ Then in the App.js file, change imported line with your current locale:
 import translation from './i18n/it.json';
 ```
 
+### Apache Configuration
+This application uses React Router. It requires Apache rewrite rules correctly set to work. 
+The following example assumes the application runs in cards subdirectory.
+```
+RewriteEngine On
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+RewriteRule ^ - [L]
+
+# Fallback all other routes to index.html
+RewriteRule ^ /cards/index.html [L]
+```
+
 # DEMO
 You can try a demo [here](TBD) using account:
  - email: `test@test.com`
