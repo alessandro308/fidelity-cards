@@ -46,6 +46,11 @@ Then in the App.js file, change imported line with your current locale:
 import translation from './i18n/it.json';
 ```
 
+# DEMO
+You can try a demo here (TO BE DEFINED) using account:
+ - email: `test@test.com`
+ - password: `test1234`
+
 ## TO DO LIST
 - Avoid to remove Gift Cards when "Remove all Cards" or "Remove Cards under 200 pt" is clicked in the All Cards page
 - Avoid to show Chart when Gift Card
