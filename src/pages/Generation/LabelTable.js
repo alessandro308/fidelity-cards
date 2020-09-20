@@ -2,10 +2,6 @@ import React from 'react';
 import JsBarcode from 'jsbarcode';
 
 class Barcode extends React.Component{
-    constructor (props) {
-        super(props);
-    }
-
 
     componentDidMount(){
         let value = this.props.value.toString().padStart(4, '0');
@@ -17,7 +13,7 @@ class Barcode extends React.Component{
     }
 
     render () {
-        return <div style={{width: '50mm', height: (this.props.labelHeight ?? 38)+'mm' , display: 'flex', justifyContent: 'center'}}>
+        return <div style={{width: this.props.labelWidth + 'mm', height: '33mm' , display: 'flex', justifyContent: 'center'}}>
             <canvas ref={ref => this.canvasRef = ref}/>
         </div>;
     }
@@ -28,15 +24,15 @@ export default class LabelTable extends React.Component{
     render(){
         return <div style={{
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
             flexWrap: 'wrap',
-            paddingTop: (this.props.marginTop ?? 0) + 'mm',
-            paddingBottom: (this.props.marginTop ?? 0) + 'mm',
-            paddingLeft: (this.props.marginLeft ?? 0) + 'mm',
-            paddingRight: (this.props.marginLeft ?? 0) + 'mm',
+            paddingTop: '10mm',
+            paddingBottom: '10mm',
+            paddingLeft: this.props.paddingSide + 'mm',
+            paddingRight: this.props.paddingSide + 'mm',
             width: '100%'
         }}>
-            {this.props.labels.map(val => <Barcode labelHeight={this.props.labelHeight} key={val} value={val}/>)}
+            {this.props.labels.map(val => <Barcode labelWidth={this.props.labelWidth} key={val} value={val}/>)}
         </div>;
     }
 }

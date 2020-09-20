@@ -53,7 +53,6 @@ export default function NewCard () {
         ])
         .then(res => {
             setRedirect(true);
-            localStorage.removeItem('fidelityCardList');
         });
     };
 

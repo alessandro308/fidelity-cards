@@ -20,19 +20,17 @@ export default function ManageDb () {
     const db = useDatabase();
 
     useEffect(() => {
-        if(!localStorage.getItem('fidelityCardList')){
-            db.ref('/cards').once('value')
-            .then((snapshot) => {
-                let cards = Object.values(snapshot.val());
-                setCards(cards)
-                localStorage.setItem('fidelityCardList', JSON.stringify(cards));
-                setIsLoading(false);
-            });
-        } else {
-            setCards(JSON.parse(localStorage.getItem('fidelityCardList')));
+        // Legacy property, no more used
+        localStorage.removeItem('fidelityCardList');
+        let ref = db.ref('/cards')
+        ref.once('value')
+        .then((snapshot) => {
+            let cards = Object.values(snapshot.val());
+            setCards(cards)
             setIsLoading(false);
-        }
-    }, []);
+        });
+        return () => ref.off();
+    }, [db]);
 
     const filterByName = (event) => {
         if(event.target.value){
@@ -41,6 +39,7 @@ export default function ManageDb () {
             setFilter(null);
         }
     };
+
     const cleanCards = (minAmountToBeSaved) => {
         /* Downloading a backup file */
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(cards));
@@ -93,7 +92,7 @@ export default function ManageDb () {
 
         <Modal show={resetCardModal} onHide={() => setResetCardModal(false)} centered>
             <Modal.Header closeButton>
-                <Modal.Title>{t`Do you want to reset cards under 200pt?`}</Modal.Title>
+                <Modal.Title>{t`Do you want to reset cards under ${ appConfig.minAmountAtEndOfTheYear }pt?`}</Modal.Title>
             </Modal.Header>
 
             <Modal.Footer>

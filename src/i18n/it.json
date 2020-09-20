@@ -1,148 +1,344 @@
 {
+    "charset": "utf-8",
     "headers": {
+        "content-type": "text/plain; charset=utf-8",
         "plural-forms": "nplurals = 3; plural = (n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2);",
-        "language": "it"
+        "language": "uk",
+        "mime-version": "1.0",
+        "content-transfer-encoding": "8bit"
     },
-    "contexts": {
+    "translations": {
         "": {
-            "Fidelity Cards": [
-                "Fidelity Cards"
-            ],
-            "Home": [
-                "Home"
-            ],
-            "Create Card": [
-                "Crea Card"
-            ],
-            "Manage Db": [
-                "Gestisci DB"
-            ],
-            "Logout": [
-                "Logout"
-            ],
-            "Create a new card": [
-                "Crea una nuova card"
-            ],
-            "Name": [
-                "Nome"
-            ],
-            "Name and Last Name": [
-                "Nome e Cognome"
-            ],
-            "Email": [
-                "Email"
-            ],
-            "Enter email": [
-                "Inserisci email"
-            ],
-            "Phone": [
-                "Telefono"
-            ],
-            "Card Number": [
-                "Numero Card"
-            ],
-            "12345678 - Required": [
-                "1234589 - Richiesto"
-            ],
-            "Business": [
-                "Business"
-            ],
-            "Standard": [
-                "Standard"
-            ],
-            "Create": [
-                "Crea"
-            ],
-            "eMail": [
-                "eMail"
-            ],
-            "Type": [
-                "Tipo"
-            ],
-            "Points": [
-                "Punti"
-            ],
-            "Deleting": [
-                "Eliminando..."
-            ],
-            "Filter by name": [
-                "Filtra per nome"
-            ],
-            "Reset Card under ${ appConfig.minAmountAtEndOfTheYear }": [
-                "Azzera Card sotto ${ appConfig.minAmountAtEndOfTheYear } punti"
-            ],
-            "Reset All Card": [
-                "Azzera tutte le card"
-            ],
-            "Do you want to reset cards under 200pt?": [
-                "Vuoi azzerare le card sotto i 200pt?"
-            ],
-            "Cancel": [
-                "Annulla"
-            ],
-            "Delete": [
-                "Elimina"
-            ],
-            "Do you want to reset ALL cards?": [
-                "Vuoi azzerare TUTTE le cards?"
-            ],
-            "Password": [
-                "Password"
-            ],
-            "Submit": [
-                "Invia"
-            ],
-            "In the last 30 days this card has earned ${ lastMonthPoint } points": [
-                "Negli ultimi 30 giorni, questa card sono stati aggiunti ${ lastMonthPoint } punti"
-            ],
-            "Card #${ cardNumber } successfully deleted": [
-                "Card #${ cardNumber } aggiunta con successo"
-            ],
-            "Creation Date": [
-                "Data di creazione"
-            ],
-            "See card trend": [
-                "Guarda l'andamento"
-            ],
-            "Date": [
-                "Data"
-            ],
-            "Action": [
-                "Azione"
-            ],
-            "Applied Discount": [
-                "Applica sconto"
-            ],
-            "Card Creation": [
-                "Creazione Card"
-            ],
-            "Show complete history": [
-                "Mostra lo storico completa"
-            ],
-            "Show only latest entries": [
-                "Mostra solo gli ultimi movimenti"
-            ],
-            "Use Discount": [
-                "Usa sconto"
-            ],
-            "Add points": [
-                "Aggiungi Punti"
-            ],
-            "Point to add": [
-                "Punti da aggiungere"
-            ],
-            "Close": [
-                "Chiudi"
-            ],
-            "Do you want to delete the card #${ cardNumber }?": [
-                "Vuoi eliminare la card #${ cardNumber }?"
-            ],
-            "Apply discount to card #${ cardNumber }?": [
-                "Vuoi applicare lo sconto alla card #${ cardNumber }?"
-            ],
-            "Use": [
-                "Usa"
-            ]
+            "": {
+                "msgid": "",
+                "msgstr": [
+                    "Content-Type: text/plain; charset=utf-8\nPlural-Forms: nplurals = 3; plural = (n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2);\nLanguage: uk\nmime-version: 1.0\nContent-Transfer-Encoding: 8bit\n"
+                ]
+            },
+            "You are disconnected": {
+                "msgid": "You are disconnected",
+                "msgstr": [
+                    "Sei disconnesso"
+                ]
+            },
+            "Fidelity Cards": {
+                "msgid": "Fidelity Cards",
+                "msgstr": [
+                    "Fidelity Cards"
+                ]
+            },
+            "Home": {
+                "msgid": "Home",
+                "msgstr": [
+                    "Home"
+                ]
+            },
+            "New Card": {
+                "msgid": "New Card",
+                "msgstr": [
+                    "Nuova Card"
+                ]
+            },
+            "All Cards": {
+                "msgid": "All Cards",
+                "msgstr": [
+                    "Tutte le cards"
+                ]
+            },
+            "Generate Barcodes": {
+                "msgid": "Generate Barcodes",
+                "msgstr": [
+                    "Genera Codici a Barre"
+                ]
+            },
+            "Logout": {
+                "msgid": "Logout",
+                "msgstr": [
+                    "Logout"
+                ]
+            },
+            "Create a new card": {
+                "msgid": "Create a new card",
+                "msgstr": [
+                    "Creare nuova card"
+                ]
+            },
+            "Name": {
+                "msgid": "Name",
+                "msgstr": [
+                    "Nome"
+                ]
+            },
+            "Name and Last Name": {
+                "msgid": "Name and Last Name",
+                "msgstr": [
+                    "Nome e cognome"
+                ]
+            },
+            "Email": {
+                "msgid": "Email",
+                "msgstr": [
+                    "Email"
+                ]
+            },
+            "Enter email": {
+                "msgid": "Enter email",
+                "msgstr": [
+                    "Inserisci email"
+                ]
+            },
+            "Phone": {
+                "msgid": "Phone",
+                "msgstr": [
+                    "Telefono"
+                ]
+            },
+            "Card Number": {
+                "msgid": "Card Number",
+                "msgstr": [
+                    "Numero Card"
+                ]
+            },
+            "12345678 - Required": {
+                "msgid": "12345678 - Required",
+                "msgstr": [
+                    "1234578 - Obbligatorio"
+                ]
+            },
+            "Business": {
+                "msgid": "Business",
+                "msgstr": [
+                    "Business"
+                ]
+            },
+            "Standard": {
+                "msgid": "Standard",
+                "msgstr": [
+                    "Standard"
+                ]
+            },
+            "Gift Card": {
+                "msgid": "Gift Card",
+                "msgstr": [
+                    "Carta Regalo"
+                ]
+            },
+            "Create": {
+                "msgid": "Create",
+                "msgstr": [
+                    "Crea"
+                ]
+            },
+            "eMail": {
+                "msgid": "eMail",
+                "msgstr": [
+                    "eMail"
+                ]
+            },
+            "Type": {
+                "msgid": "Type",
+                "msgstr": [
+                    "Tipo"
+                ]
+            },
+            "Points": {
+                "msgid": "Points",
+                "msgstr": [
+                    "Punti"
+                ]
+            },
+            "Deleting": {
+                "msgid": "Deleting",
+                "msgstr": [
+                    "Eliminando"
+                ]
+            },
+            "Filter by name": {
+                "msgid": "Filter by name",
+                "msgstr": [
+                    "Filtra per nome"
+                ]
+            },
+            "Customer Name": {
+                "msgid": "Customer Name",
+                "msgstr": [
+                    "Nome Cliente"
+                ]
+            },
+            "Reset Card under ${ appConfig.minAmountAtEndOfTheYear }": {
+                "msgid": "Reset Card under ${ appConfig.minAmountAtEndOfTheYear }",
+                "msgstr": [
+                    "Azzera le Card sotto ${ appConfig.minAmountAtEndOfTheYear } punti"
+                ]
+            },
+            "Reset All Card": {
+                "msgid": "Reset All Card",
+                "msgstr": [
+                    "Azzera tutte le card"
+                ]
+            },
+            "Do you want to reset cards under ${ appConfig.minAmountAtEndOfTheYear }pt?": {
+                "msgid": "Do you want to reset cards under ${ appConfig.minAmountAtEndOfTheYear }pt?",
+                "msgstr": [
+                    "Vuoi azzerare le card sotto i ${ appConfig.minAmountAtEndOfTheYear }pt?"
+                ]
+            },
+            "Cancel": {
+                "msgid": "Cancel",
+                "msgstr": [
+                    "Annulla"
+                ]
+            },
+            "Delete": {
+                "msgid": "Delete",
+                "msgstr": [
+                    "Elimina"
+                ]
+            },
+            "Do you want to reset ALL cards?": {
+                "msgid": "Do you want to reset ALL cards?",
+                "msgstr": [
+                    "Vuoi azzerare TUTTE le cards?"
+                ]
+            },
+            "Password": {
+                "msgid": "Password",
+                "msgstr": [
+                    "Password"
+                ]
+            },
+            "Submit": {
+                "msgid": "Submit",
+                "msgstr": [
+                    "Invia"
+                ]
+            },
+            "Starting Generation Value": {
+                "msgid": "Starting Generation Value",
+                "msgstr": [
+                    "Valore iniziale"
+                ]
+            },
+            "Staring Value": {
+                "msgid": "Staring Value",
+                "msgstr": [
+                    "Valore Iniziale"
+                ]
+            },
+            "Label Count": {
+                "msgid": "Label Count",
+                "msgstr": [
+                    "Quantità Etichette"
+                ]
+            },
+            "Print labels!": {
+                "msgid": "Print labels!",
+                "msgstr": [
+                    "Stampa Etichette"
+                ]
+            },
+            "In the last 30 days this card has earned ${ lastMonthPoint } points": {
+                "msgid": "In the last 30 days this card has earned ${ lastMonthPoint } points",
+                "msgstr": [
+                    "Negli ultimi 30 giorni questa card ha guadagnato ${ lastMonthPoint } punti"
+                ]
+            },
+            "Date": {
+                "msgid": "Date",
+                "msgstr": [
+                    "Data"
+                ]
+            },
+            "Action": {
+                "msgid": "Action",
+                "msgstr": [
+                    "Azione"
+                ]
+            },
+            "Applied Discount": {
+                "msgid": "Applied Discount",
+                "msgstr": [
+                    "Applica sconto"
+                ]
+            },
+            "Card Creation": {
+                "msgid": "Card Creation",
+                "msgstr": [
+                    "Creazione Card"
+                ]
+            },
+            "Something went wrong. Refresh the page and retry": {
+                "msgid": "Something went wrong. Refresh the page and retry",
+                "msgstr": [
+                    "Qualcosa è andato storto. Ricarica la pagina e riprova"
+                ]
+            },
+            "Card successfully deleted": {
+                "msgid": "Card successfully deleted",
+                "msgstr": [
+                    "Carta eliminata con successo"
+                ]
+            },
+            "Scan the card code": {
+                "msgid": "Scan the card code",
+                "msgstr": [
+                    "Scansiona il codice della card"
+                ]
+            },
+            "Creation Date": {
+                "msgid": "Creation Date",
+                "msgstr": [
+                    "Data creazione"
+                ]
+            },
+            "Show complete history": {
+                "msgid": "Show complete history",
+                "msgstr": [
+                    "Mostra lo storico completo"
+                ]
+            },
+            "Use Discount": {
+                "msgid": "Use Discount",
+                "msgstr": [
+                    "Usa sconto"
+                ]
+            },
+            "Add points": {
+                "msgid": "Add points",
+                "msgstr": [
+                    "Aggiungi punti"
+                ]
+            },
+            "Point to add": {
+                "msgid": "Point to add",
+                "msgstr": [
+                    "Punti da aggiungere"
+                ]
+            },
+            "Close": {
+                "msgid": "Close",
+                "msgstr": [
+                    "Chiudi"
+                ]
+            },
+            "Do you want to delete the card #${ cardNumber }?": {
+                "msgid": "Do you want to delete the card #${ cardNumber }?",
+                "msgstr": [
+                    "Vuoi eliminare la card #${ cardNumber }?"
+                ]
+            },
+            "Apply discount to card #${ cardNumber }?": {
+                "msgid": "Apply discount to card #${ cardNumber }?",
+                "msgstr": [
+                    "Vuoi applicare lo sconto alla card #${ cardNumber }?"
+                ]
+            },
+            "Use": {
+                "msgid": "Use",
+                "msgstr": [
+                    "Usa"
+                ]
+            }
         }
     }
 }

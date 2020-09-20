@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {sortBy} from 'lodash';
 import {
     Container,
     Form,
@@ -36,28 +35,8 @@ export default function CardManagement () {
     const [showOperations, setShowOperations] = useState(false);
     const [addedPoint, setAddedPoint] = useState(0);
     const [discountToApply, setDiscountToApply] = useState(null);
-    const [cardNumberRef, setCardNumberRef] = useState(null);
 
     const db = useDatabase();
-
-    // const searchCardNumber = (number) => {
-    //     if(number.length === 0){
-    //         return;
-    //     }
-    //     if(cardNumberRef){
-    //         console.log('ccalled off', cardNumberRef);
-    //         cardNumberRef.off();
-    //     }
-    //     let newRef = db.ref('/cards/' + number);
-    //     setCardNumberRef(newRef)
-    //     newRef
-    //     .on('value', (snapshot) => {
-    //         let cardResult = snapshot.val();
-    //         if (cardResult) {
-    //             setCard(cardResult);
-    //         }
-    //     });
-    // };
 
     useEffect(() => {
         if(!cardNumber || cardNumber.length === 0){
@@ -70,32 +49,22 @@ export default function CardManagement () {
                 setCard(cardResult);
             }
         });
-        return () => {
-            console.log('removing ref')
-            newRef.off()
-        }
-    }, [cardNumber])
+        return () => newRef.off();
+    }, [db, cardNumber]);
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
+        window.history.replaceState({}, document.title, window.location.pathname);
         const cardId = urlParams.get('id');
-        if (cardId && cardId !== cardNumber) {
+        if (cardId) {
             setCardNumber(cardId);
-            //searchCardNumber(cardId);
         }
-        return () => {
-            console.log('unmount component', cardNumberRef);
-            if(cardNumberRef){
-                console.log('unmount removed ref');
-                cardNumberRef.off();
-            }
-        }
-    }, []);
+    }, [db, card]);
 
-
-    const getOperations = (number) => {
-        if(operations == null){
-            db.ref('/operations/' + number)
+    useEffect(() => {
+        let ref = db.ref('/operations/' + cardNumber);
+        if(showOperations) {
+            ref
             .on('value', (snapshot) => {
                 if (snapshot.val()) {
                     setOperations(Object.values(snapshot.val())
@@ -103,7 +72,8 @@ export default function CardManagement () {
                 }
             });
         }
-    };
+        return () => ref.off();
+    }, [db, cardNumber, showOperations]);
 
     const onCardNumberChange = (event) => {
         let number = event.target.value;
@@ -163,13 +133,11 @@ export default function CardManagement () {
             setCardDeleted(true);
             setCard(null);
             setCardNumber(undefined);
-            localStorage.removeItem('fidelityCardList');
         });
 
     };
 
     const onShowOperationClick = () => {
-        getOperations(cardNumber);
         setShowOperations(true);
     };
 

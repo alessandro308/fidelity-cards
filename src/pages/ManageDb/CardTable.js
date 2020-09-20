@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
     Table
 } from 'react-bootstrap';
@@ -21,6 +21,7 @@ export default function CardTable (props) {
                     <th>{t`Phone`}</th>
                     <th>{t`eMail`}</th>
                     <th>{t`Type`}</th>
+                    <th>{t`Points`}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,6 +32,7 @@ export default function CardTable (props) {
                         <td>{card.phone}</td>
                         <td>{card.email}</td>
                         <td>{card.type}</td>
+                        <td>{card.total}</td>
                     </tr>
                 )}
                 </tbody>

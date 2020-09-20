@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import ReactToPrint from 'react-to-print';
 import {Container, Button, InputGroup, FormControl} from 'react-bootstrap';
 import LabelTable from './LabelTable';
@@ -9,9 +9,9 @@ export default class Generate extends React.Component{
         super(props);
         this.state = {
             startingValue: 1,
-            marginTop: 13,
-            marginLeft: 7,
-            labelHeight: 34,
+            labelCount: 60,
+            labelWidth: 58,
+            paddingSide: 1,
         };
         this.onStartingValueChange = this.onStartingValueChange.bind(this);
         this.onParamsChange = this.onParamsChange.bind(this);
@@ -28,12 +28,15 @@ export default class Generate extends React.Component{
         try {
             number = parseInt(event.target.value);
         } catch(e){}
+        let isCorrectStartingValue = true;
         if(isNaN(number)){
-            number = 1;
+            isCorrectStartingValue = false;
+            number = event.target.value;
         }
 
         this.setState({
             startingValue: number,
+            isCorrectStartingValue,
         });
     }
 
@@ -51,34 +54,12 @@ export default class Generate extends React.Component{
             </InputGroup>
             <InputGroup className="mb-3">
                 <InputGroup.Prepend>
-                    <InputGroup.Text id="basic-addon1">{t`Margine sopra e sotto`}</InputGroup.Text>
+                    <InputGroup.Text id="basic-addon1">{t`Label Count`}</InputGroup.Text>
                 </InputGroup.Prepend>
                 <FormControl
-                    name="marginTop"
-                    aria-label={t`Staring Value`}
-                    value={this.state.marginTop}
-                    onChange={this.onParamsChange}
-                />
-            </InputGroup>
-            <InputGroup className="mb-3">
-                <InputGroup.Prepend>
-                    <InputGroup.Text id="basic-addon1">{t`Margine laterali`}</InputGroup.Text>
-                </InputGroup.Prepend>
-                <FormControl
-                    name="marginLeft"
-                    aria-label={t`Staring Value`}
-                    value={this.state.marginLeft}
-                    onChange={this.onParamsChange}
-                />
-            </InputGroup>
-            <InputGroup className="mb-3">
-                <InputGroup.Prepend>
-                    <InputGroup.Text id="basic-addon1">{t`Altezza label`}</InputGroup.Text>
-                </InputGroup.Prepend>
-                <FormControl
-                    name="labelHeight"
-                    aria-label={t`Staring Value`}
-                    value={this.state.labelHeight}
+                    name="labelCount"
+                    aria-label={t`Label Count`}
+                    value={this.state.labelCount}
                     onChange={this.onParamsChange}
                 />
             </InputGroup>
@@ -89,8 +70,9 @@ export default class Generate extends React.Component{
                 }}
                 content={() => this.refContainer}
             />
-            <LabelTable labelHeight={this.state.labelHeight} marginTop={this.state.marginTop} marginLeft={this.state.marginLeft}
-                labels={Array.from({length: 60}, (_, i) => i + this.state.startingValue)} ref={ref => this.refContainer = ref} />
+            <LabelTable labelWidth={this.state.labelWidth} paddingSide={this.state.paddingSide}
+                labels={Array.from({length: this.state.labelCount}, (_, i) => i + (this.state.isCorrectStartingValue ? this.state.startingValue : 1))}
+                ref={ref => this.refContainer = ref} />
         </Container>
     }
 }
