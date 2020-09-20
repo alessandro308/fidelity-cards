@@ -1,5 +1,12 @@
 export const firebaseConfig = {
     // Paste here firebase configuration
+    apiKey: '',
+    authDomain: '',
+    databaseURL: '',
+    projectId: '',
+    storageBucket: '',
+    messagingSenderId: '',
+    appId: '',
 };
 
 export const appConfig = {

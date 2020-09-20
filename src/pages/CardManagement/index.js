@@ -16,7 +16,7 @@ import {
 import {t} from 'ttag';
 import {useDatabase} from 'reactfire';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPlus, faStar} from '@fortawesome/free-solid-svg-icons';
+import {faPlus, faStar, faGift} from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import CardChart from './CardChart';
 import {appConfig} from '../../config/config';
@@ -169,10 +169,11 @@ export default function CardManagement () {
                 <Jumbotron>
                     <h1 style={{display: 'flex', justifyContent: 'space-between'}}>
                         <span>
-                            {card.name} {card?.type === 'business' ? <Badge
-                            variant="primary"><FontAwesomeIcon icon={faStar}></FontAwesomeIcon> Business</Badge> : <Badge variant="secondary">Standard</Badge>}
+                            {card.name} {card?.type === 'business' ?
+                            <Badge variant="primary"><FontAwesomeIcon icon={faStar}></FontAwesomeIcon> Business</Badge> :
+                            card?.type === 'gift' ? <Badge variant="success"><FontAwesomeIcon icon={faGift}></FontAwesomeIcon> Gift Card</Badge> : <Badge variant="secondary">Standard</Badge>}
                         </span><Badge
-                        variant="primary">{card == null ? <Spinner animation="border" /> : (total ?? card.total)}</Badge></h1>
+                        variant="primary">{card == null ? <Spinner animation="border" /> : total}</Badge></h1>
                     <p>
                         <span>{card.email}</span>{card.email && card.phone ? <span> - </span> : null}<span>{card.phone}</span>
                     </p>
@@ -189,8 +190,8 @@ export default function CardManagement () {
                             {!showOperations ? <Button variant="link" onClick={() => onShowOperationClick()}>{t`Show complete history`}</Button> : null}
                         </div>
                         <div>
-                            <Button variant="info" disabled={!total || total < discountType.at} onClick={() => setDiscountModalOpen(true)}>
-                                {t`Use Discount`}
+                            <Button variant="info" disabled={card?.type !== 'gift' && (!total || total < discountType?.at)} onClick={() => setDiscountModalOpen(true)}>
+                                {card?.type === 'gift' ? t`Use gift points`: t`Use Discount`}
                             </Button>
                             {' '}
                             <Button variant="primary" style={{borderRadius: '100%'}} onClick={() => openModal()}>
@@ -240,30 +241,48 @@ export default function CardManagement () {
 
         <Modal show={discountModalOpen} onHide={() => setDiscountModalOpen(false)} centered>
             <Modal.Header closeButton>
-                <Modal.Title>{t`Apply discount to card #${cardNumber}?`}</Modal.Title>
+                <Modal.Title>{card?.type === 'gift' ? t`Use Gift Points` : t`Apply discount to card #${cardNumber}?`}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <ToggleButtonGroup type="radio" value={discountToApply} name="discountToApply" onChange={(e) => setDiscountToApply(e)}>
-                    {card?.total ? new Array(Math.floor(total / discountType.at)).fill(0)
-                    .map((_, idx) => {
-                        const value = discountType.at*(idx+1);
-                        return <ToggleButton
-                            key={idx}
-                            variant={discountToApply === value ? 'primary' : 'secondary'}
-                            name="discountToApply"
-                            value={value}
-                            checked={discountToApply === value}
-                            onChange={(e) => setDiscountToApply(e.currentTarget.value)}
-                        >
-                            {discountType.value*(idx+1)}€
-                        </ToggleButton>;
-                    }) : null}
-                </ToggleButtonGroup>
+                {
+                    Math.floor(total / discountType.at) < 11 ?
+                        <ToggleButtonGroup type="radio" value={discountToApply} name="discountToApply" onChange={(e) => setDiscountToApply(e)}>
+                            {total ? new Array(Math.floor(total / discountType.at)).fill(0)
+                            .map((_, idx) => {
+                                const value = discountType.at*(idx+1);
+                                return <ToggleButton
+                                    key={idx}
+                                    variant={discountToApply === value ? 'primary' : 'secondary'}
+                                    name="discountToApply"
+                                    value={value}
+                                    checked={discountToApply === value}
+                                    onChange={(e) => setDiscountToApply(e.currentTarget.value)}
+                                >
+                                    {discountType.value*(idx+1)}€
+                                </ToggleButton>;
+                            }) : null}
+                        </ToggleButtonGroup>
+                        :
+                        <InputGroup className="mb-3">
+                            <FormControl
+                                onChange={(e) => setDiscountToApply(e.currentTarget.value)}
+                                type="number"
+                                placeholder={t`Gift Point to use`}
+                                aria-label={t`Gift Point to use`}
+                                aria-describedby="basic-addon1"
+                                isInvalid={discountToApply > total}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {t`There are no enough points available`}
+                            </Form.Control.Feedback>
+                        </InputGroup>
+                }
+
             </Modal.Body>
 
             <Modal.Footer>
                 <Button variant="secondary" onClick={() => setDiscountModalOpen(false)}>{t`Cancel`}</Button>
-                <Button variant="primary" onClick={() => applyDiscount()}>{t`Use`}</Button>
+                <Button variant="primary" disabled={discountToApply > total} onClick={() => applyDiscount()}>{t`Use`}</Button>
             </Modal.Footer>
         </Modal>
 
