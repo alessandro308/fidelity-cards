@@ -6,6 +6,7 @@ import {
     Form,
     ToggleButtonGroup,
     ToggleButton,
+    Modal,
 } from 'react-bootstrap';
 import {t} from 'ttag';
 import {useDatabase} from 'reactfire';
@@ -20,6 +21,8 @@ export default function NewCard () {
     const [cardNumber, setCardNumber] = useState('');
     const [cardType, setCardType] = useState('business');
     const [redirect, setRedirect] = useState(false);
+    const [showCardExistErrorModal, setShowCardExistErrorModal] = useState(false);
+    const [showCardExistError, setShowCardExistError] = useState(false);
 
     const db = useDatabase();
 
@@ -28,32 +31,43 @@ export default function NewCard () {
             return;
         }
         event.preventDefault();
-        Promise.all([
-            db.ref('cards')
-            .update({
-                [cardNumber]: {
-                    email,
-                    name,
-                    phone,
-                    type: cardType,
-                    id: cardNumber,
-                    creationDate: moment(new Date())
-                    .format(),
-                },
-            }),
-            db.ref('operations')
-            .update({
-                [cardNumber]: [
-                    {
-                        date: moment(new Date())
-                        .format(), value: 0,
-                    },
-                ],
-            }),
-        ])
-        .then(res => {
-            setRedirect(true);
+        db.ref('/cards/' + cardNumber)
+        .once('value')
+        .then(snap => {
+            if(snap.val() === null) {
+                setShowCardExistError(false);
+                Promise.all([
+                    db.ref('cards')
+                    .update({
+                        [cardNumber]: {
+                            email,
+                            name,
+                            phone,
+                            type: cardType,
+                            id: cardNumber,
+                            creationDate: moment(new Date())
+                            .format(),
+                        },
+                    }),
+                    db.ref('operations')
+                    .update({
+                        [cardNumber]: [
+                            {
+                                date: moment(new Date())
+                                .format(), value: 0,
+                            },
+                        ],
+                    }),
+                ])
+                .then(res => {
+                    setRedirect(true);
+                });
+            } else {
+                setShowCardExistErrorModal(true);
+                setShowCardExistError(true);
+            }
         });
+
     };
 
     return <Container className="pageContainer">
@@ -79,7 +93,14 @@ export default function NewCard () {
 
                 <Form.Group controlId="formBasicPhone">
                     <Form.Label>{t`Card Number`}</Form.Label>
-                    <Form.Control type="text" placeholder={t`12345678 - Required`} onChange={(event) => setCardNumber(event.target.value)}/>
+                    <Form.Control type="text"
+                                  placeholder={t`12345678 - Required`}
+                                  onChange={(event) => setCardNumber(event.target.value)}
+                                  isInvalid={showCardExistError}
+                        />
+                    <Form.Control.Feedback type="invalid">
+                        {t`Card number already exist`}
+                    </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPhone">
@@ -95,5 +116,16 @@ export default function NewCard () {
                 </Button>
             </Form>
         </Jumbotron>
+        <Modal show={showCardExistErrorModal} onHide={() => setShowCardExistErrorModal(false)}>
+            <Modal.Header closeButton>
+                <Modal.Title>{t`Card already exists`}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>{t`Delete the previous card before to create a new card with the same Card Number`}</Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={() => setShowCardExistErrorModal(false)}>
+                    Close
+                </Button>
+            </Modal.Footer>
+        </Modal>
     </Container>;
 }
