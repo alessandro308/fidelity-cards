@@ -47,7 +47,7 @@ import translation from './i18n/it.json';
 ```
 
 # DEMO
-You can try a demo here (TO BE DEFINED) using account:
+You can try a demo [here](TBD) using account:
  - email: `test@test.com`
  - password: `test1234`
 
