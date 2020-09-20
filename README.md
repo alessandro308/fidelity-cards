@@ -1,4 +1,5 @@
 # Fidelity Cards
+![screenshot](https://raw.githubusercontent.com/alessandro308/fidelity-cards/master/screenshot.png)
 This is an application to manage fidelity cards of a small business. 
 This system is able to manage different type of cards:
  - Business
