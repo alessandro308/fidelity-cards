@@ -61,7 +61,7 @@ function MainNavbar () {
             {t`You are disconnected`}
         </Alert> : null}
         <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="#home">{appConfig.appName || t`Fidelity Cards`} (v2.0)</Navbar.Brand>
+            <Navbar.Brand>{appConfig.appName || t`Fidelity Cards`} (v2.0)</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
