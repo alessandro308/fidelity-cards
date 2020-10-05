@@ -19,6 +19,10 @@ export const appConfig = {
         standard: {
             at: 50,
             value: 5,
+        },
+        gift: {
+            at: 1,
+            value: 1,
         }
     },
     minAmountAtEndOfTheYear: 200,
