@@ -16,11 +16,12 @@ import {
 import {t} from 'ttag';
 import {useDatabase} from 'reactfire';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPlus, faStar, faGift} from '@fortawesome/free-solid-svg-icons';
+import {faPlus, faStar, faGift, faSms} from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import CardChart from './CardChart';
 import {appConfig} from '../../config/config';
 import CardOperationTable from './CardOperationList';
+import firebase from 'firebase';
 
 export default function CardManagement () {
 
@@ -32,7 +33,6 @@ export default function CardManagement () {
     const [modalOpen, setModalOpen] = useState(false);
     const [discountModalOpen, setDiscountModalOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [showOperations, setShowOperations] = useState(false);
     const [addedPoint, setAddedPoint] = useState(0);
     const [discountToApply, setDiscountToApply] = useState(null);
 
@@ -42,6 +42,7 @@ export default function CardManagement () {
         if(!cardNumber || cardNumber.length === 0){
             return;
         }
+
         let newRef = db.ref('/cards/' + cardNumber);
         newRef.on('value', (snapshot) => {
             let cardResult = snapshot.val();
@@ -62,25 +63,28 @@ export default function CardManagement () {
     }, [db, card]);
 
     useEffect(() => {
-        let ref = db.ref('/operations/' + cardNumber);
-        if(showOperations) {
-            ref
-            .on('value', (snapshot) => {
-                if (snapshot.val()) {
-                    setOperations(Object.values(snapshot.val())
-                    .filter(e => e.value !== 0));
-                }
-            });
+        if(!cardNumber){
+            setOperations([]);
+            return;
         }
+
+        let ref = db.ref('/operations/' + cardNumber);
+        ref.on('value', (snapshot) => {
+            if (snapshot.val()) {
+                setOperations(Object.values(snapshot.val())
+                .filter(e => e.value !== 0));
+            } else {
+                setOperations([]);
+            }
+        });
         return () => ref.off();
-    }, [db, cardNumber, showOperations]);
+    }, [db, cardNumber]);
 
     const onCardNumberChange = (event) => {
         let number = event.target.value;
         setCardNumber(number);
         setCard(null);
         setCardDeleted(null);
-        setShowOperations(false);
     };
 
     const updatePoint = (value) => {
@@ -91,12 +95,20 @@ export default function CardManagement () {
         };
 
         try {
-            let newOperationRef = db.ref(`/operations/${cardNumber}`)
-            .push();
+            if(operations.length === 0 && card.referrer){
+                let newOperationRef = db.ref(`/operations/${card.referrer}`).push();
+                newOperation.key = newOperationRef.key;
+                newOperationRef.set({
+                    ...newOperation,
+                    origin: 'referrer',
+                });
+                db.ref(`/cards/${card.referrer}/total`).set(firebase.database.ServerValue.increment(newOperation.value));
+            }
+            let newOperationRef = db.ref(`/operations/${cardNumber}`).push();
             newOperation.key = newOperationRef.key;
             newOperationRef.set(newOperation);
 
-            db.ref(`/cards/${cardNumber}/total`).set(parseInt(total ?? 0) + parseInt(value))
+            db.ref(`/cards/${cardNumber}/total`).set(firebase.database.ServerValue.increment(newOperation.value));
         } catch(e){
             alert(t`Something went wrong. Refresh the page and retry`, e);
         }
@@ -137,34 +149,33 @@ export default function CardManagement () {
 
     };
 
-    const onShowOperationClick = () => {
-        setShowOperations(true);
-    };
-
-
-
-    let total = card?.total;
-    if(operations){
-        total = operations.map(a => parseInt(a.value))
-        .reduce((a, b) => a + b, 0);
-    }
+    const total = operations ? operations.map(a => parseInt(a.value)).reduce((a, b) => a + b, 0) : 0;
 
     const discountType = appConfig.discounts[card?.type ?? 'business'];
 
+    const sendWhatsappLink = () => {
+        let url = `${appConfig.cardLink}?code=${btoa(cardNumber)}`;
+        window.open(`https://api.whatsapp.com/send?phone=${appConfig.countryPrefix}${card.phone}&text=${appConfig.whatsappText}${url}`, '_blank');
+    };
+
     return <React.Fragment>
         <Container className="pageContainer">
+
             {cardDeleted ? <Alert variant="danger">
                 {t`Card successfully deleted`}
             </Alert> : null}
+
             <Form onSubmit={(e) => {e.preventDefault(); setCardNumber(cardNumberInputRef.current?.value ?? cardNumber)}}>
                 <Form.Group controlId="formCardNumber">
                     <Form.Label>{t`Card Number`}</Form.Label>
                     <Form.Control value={cardNumber} placeholder={t`Scan the card code`}
                                   ref={cardNumberInputRef}
-                                  onFocus={ () => onCardNumberChange({target: {value: ""}}) }
+                                  autoFocus
+                                  onFocus={() => onCardNumberChange({target: {value: ""}}) }
                                   onChange={(e) => onCardNumberChange(e)}/>
                 </Form.Group>
             </Form>
+
             {card && card.id === cardNumber ?
                 <Jumbotron>
                     <h1 style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -172,22 +183,25 @@ export default function CardManagement () {
                             {card.name} {card?.type === 'business' ?
                             <Badge variant="primary"><FontAwesomeIcon icon={faStar}></FontAwesomeIcon> Business</Badge> :
                             card?.type === 'gift' ? <Badge variant="success"><FontAwesomeIcon icon={faGift}></FontAwesomeIcon> Gift Card</Badge> : <Badge variant="secondary">Standard</Badge>}
+                            {' '}
+                            { card?.phone ? <Button variant='outline-primary' onClick={() => sendWhatsappLink()}><FontAwesomeIcon size="lg" icon={faSms}></FontAwesomeIcon></Button> : null }
                         </span><Badge
                         variant="primary">{card == null ? <Spinner animation="border" /> : total}</Badge></h1>
                     <p>
                         <span>{card.email}</span>{card.email && card.phone ? <span> - </span> : null}<span>{card.phone}</span>
+                        { card?.referrer ? ' - ' + t`Referred By: ` + card.referrer : null }
                     </p>
                     <p>
                         <span>{t`Creation Date`}: {moment(card.creationDate)
                         .format('DD-MM-YYYY')}</span>
                     </p>
 
-                    {showOperations && operations ? <><CardChart operations={operations}/><CardOperationTable operations={operations} discountType={discountType}/></> : null }
+                    { card?.type !== 'gift' ? <CardChart card={card} operations={operations}/> : null}
+                    <CardOperationTable operations={operations} discountType={discountType}/>
 
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <div>
                             <Button variant="danger" onClick={() => setDeleteModalOpen(true)}>{t`Delete`}</Button>
-                            {!showOperations ? <Button variant="link" onClick={() => onShowOperationClick()}>{t`Show complete history`}</Button> : null}
                         </div>
                         <div>
                             <Button variant="info" disabled={card?.type !== 'gift' && (!total || total < discountType?.at)} onClick={() => setDiscountModalOpen(true)}>

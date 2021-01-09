@@ -21,9 +21,13 @@ export default function CardOperationTable (props) {
                 .reverse()
                 .map((o) => <tr key={o.date + o.value + o.key}>
                     <td>{moment(o.date)
-                    .format('YY-MM-DD - HH:MM')}</td>
-                    <td>{o.value !== 0 ? ((o.value < 0) ?
-                        <Badge variant="primary">{t`Applied Discount`} - {Math.abs(o.value)/(props.discountType.at/props.discountType.value)}€</Badge> : o.value) : t`Card Creation`}</td>
+                    .format('DD-MM-YYYY - HH:MM')}</td>
+                    <td>{o.value !== 0
+                        ? (
+                            (o.value < 0)
+                                ? <Badge variant="primary">{t`Applied Discount`} - {Math.abs(o.value)/(props.discountType.at/props.discountType.value)}€</Badge>
+                                : o.origin === 'referrer' ? o.value + ' - Referral Bonus' : o.value)
+                        : t`Card Creation`}</td>
                 </tr>)
             }
             </tbody>

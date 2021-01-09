@@ -11,6 +11,9 @@ export const firebaseConfig = {
 
 export const appConfig = {
     appName: 'Fidelity Cards',
+    cardLink: 'https://parrucchieriestetiste.it/card',
+    countryPrefix: '39',
+    whatsappText: 'Ciao,+salva+la+tua+card+Velvet+nel+tuo+cellulare.+Clicca+qui:+',
     discounts: {
         business: {
             at: 200,
@@ -26,4 +29,5 @@ export const appConfig = {
         }
     },
     minAmountAtEndOfTheYear: 200,
+    minPointsIn3MonthsToBeBusiness: 90,
 };

@@ -19,12 +19,24 @@ export default function NewCard () {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [cardNumber, setCardNumber] = useState('');
+    const [referrer, setReferrer] = useState('');
     const [cardType, setCardType] = useState('business');
     const [redirect, setRedirect] = useState(false);
     const [showCardExistErrorModal, setShowCardExistErrorModal] = useState(false);
     const [showCardExistError, setShowCardExistError] = useState(false);
 
     const db = useDatabase();
+
+    const checkCardExist = (cardNumber) => {
+        if(!cardNumber){
+            return Promise.resolve(false);
+        }
+        return db.ref('/cards/' + cardNumber)
+        .once('value')
+        .then(snap => {
+            return snap.val();
+        });
+    };
 
     const onFormSubmit = (event) => {
         if(!cardNumber){
@@ -43,6 +55,7 @@ export default function NewCard () {
                             email,
                             name,
                             phone,
+                            referrer,
                             type: cardType,
                             id: cardNumber,
                             creationDate: moment(new Date())
@@ -70,6 +83,12 @@ export default function NewCard () {
 
     };
 
+    const referralHandler = (event) => {
+        let referral = event.target.value;
+
+        setReferrer(referral);
+    };
+
     return <Container className="pageContainer">
         {redirect ? <Redirect to={`/app?id=${cardNumber}`}/> : null}
         <Jumbotron>
@@ -78,7 +97,10 @@ export default function NewCard () {
             <Form onSubmit={onFormSubmit}>
                 <Form.Group controlId="formBasicText">
                     <Form.Label>{t`Name`}</Form.Label>
-                    <Form.Control type="text" placeholder={t`Name and Last Name`} onChange={(event) => setName(event.target.value)}/>
+                    <Form.Control type="text"
+                                  required
+                                  placeholder={t`Name and Last Name`}
+                                  onChange={(event) => setName(event.target.value)}/>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicEmail">
@@ -88,19 +110,31 @@ export default function NewCard () {
 
                 <Form.Group controlId="formBasicPhone">
                     <Form.Label>{t`Phone`}</Form.Label>
-                    <Form.Control type="text" placeholder={t`Phone`} onChange={(event) => setPhone(event.target.value)}/>
+                    <Form.Control type="text"
+                                  required
+                                  placeholder={t`Phone`}
+                                  onChange={(event) => setPhone(event.target.value)}/>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPhone">
-                    <Form.Label>{t`Card Number`}</Form.Label>
+                    <Form.Label><strong>{t`Card Number`}</strong></Form.Label>
                     <Form.Control type="text"
                                   placeholder={t`12345678 - Required`}
-                                  onChange={(event) => setCardNumber(event.target.value)}
+                                  required
+                                  onChange={event => setCardNumber(event.target.value)}
                                   isInvalid={showCardExistError}
                         />
                     <Form.Control.Feedback type="invalid">
-                        {t`Card number already exist`}
+                        {t`Card number does not exists`}
                     </Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group controlId="formBasicPhone">
+                    <Form.Label>{t`Referral`}</Form.Label>
+                    <Form.Control type="text"
+                                  placeholder="12345678"
+                                  onChange={referralHandler}
+                        />
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPhone">

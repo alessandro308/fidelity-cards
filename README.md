@@ -37,7 +37,7 @@ export const appConfig = {
 
 ### How to translate the app
 ```bash
-npx ttag init uk i18n/uk.po  # Generate the po file if not present, otherwise...
+mkdir i18n && npx ttag init uk i18n/uk.po  # Generate the po file if not present, otherwise...
 npx ttag update i18n/uk.po src/  # ... just update it
 npx ttag po2json i18n/uk.po > src/i18n/uk.json  # Convert it to a JSON to be loaded by the app
 ```
