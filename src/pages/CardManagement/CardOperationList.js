@@ -8,7 +8,8 @@ import {t} from 'ttag';
 import moment from 'moment';
 
 export default function CardOperationTable (props) {
-    return <Table striped bordered hover>
+    return <div className="operation-table" style={{maxHeight: '400px', overflow: 'scroll'}}>
+        <Table striped bordered hover>
             <thead>
             <tr>
                 <th>{t`Date`}</th>
@@ -31,5 +32,6 @@ export default function CardOperationTable (props) {
                 </tr>)
             }
             </tbody>
-        </Table>;
+        </Table>
+    </div>;
 }
