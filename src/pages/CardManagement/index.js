@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
+import {SmsSender} from './SmsSender';
 import {
     Container,
     Form,
@@ -16,7 +17,7 @@ import {
 import {t} from 'ttag';
 import {useDatabase} from 'reactfire';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPlus, faStar, faGift, faSms} from '@fortawesome/free-solid-svg-icons';
+import {faPlus, faStar, faGift} from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import CardChart from './CardChart';
 import {appConfig} from '../../config/config';
@@ -153,11 +154,6 @@ export default function CardManagement () {
 
     const discountType = appConfig.discounts[card?.type ?? 'business'];
 
-    const sendWhatsappLink = () => {
-        let url = `${appConfig.cardLink}?code=${btoa(cardNumber)}`;
-        window.open(`https://api.whatsapp.com/send?phone=${appConfig.countryPrefix}${card.phone}&text=${appConfig.whatsappText}${url}`, '_blank');
-    };
-
     return <React.Fragment>
         <Container className="pageContainer">
 
@@ -184,7 +180,7 @@ export default function CardManagement () {
                             <Badge variant="primary"><FontAwesomeIcon icon={faStar}></FontAwesomeIcon> Business</Badge> :
                             card?.type === 'gift' ? <Badge variant="success"><FontAwesomeIcon icon={faGift}></FontAwesomeIcon> Gift Card</Badge> : <Badge variant="secondary">Standard</Badge>}
                             {' '}
-                            { card?.phone ? <Button variant='outline-primary' onClick={() => sendWhatsappLink()}><FontAwesomeIcon size="lg" icon={faSms}></FontAwesomeIcon></Button> : null }
+                            { card?.phone ? <SmsSender phone={card.phone} cardNumber={cardNumber} total={total}/> : null }
                         </span><Badge
                         variant="primary">{card == null ? <Spinner animation="border" /> : total}</Badge></h1>
                     <p>

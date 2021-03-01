@@ -7,6 +7,7 @@ import {
 import {t} from 'ttag';
 import {useDatabase} from 'reactfire';
 import CardTable from './CardTable';
+import {SmsSendAll} from './SmsSendAll';
 
 export default function ManageDb () {
     const [isLoading, setIsLoading] = useState(true);
@@ -44,10 +45,13 @@ export default function ManageDb () {
                 </Spinner>
                 :
                 <React.Fragment>
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Label>{t`Filter by name`}</Form.Label>
-                        <Form.Control type="name" placeholder={t`Customer Name`} onChange={(e) => filterByName(e)} />
-                    </Form.Group>
+                    <div style={{display: 'flex', width: '100%', justifyContent: "space-between", alignItems: 'center'}}>
+                        <Form.Group controlId="formBasicEmail">
+                            <Form.Label>{t`Filter by name`}</Form.Label>
+                            <Form.Control type="name" placeholder={t`Customer Name`} onChange={(e) => filterByName(e)} />
+                        </Form.Group>
+                        <SmsSendAll recipients={cards.filter(c => c.phone).map(c => '+39'+c.phone)}/>
+                    </div>
                     <CardTable cards={cards.filter(c => filter ? c.name.toLowerCase().includes(filter.toLowerCase()) : true)}/>
                 </React.Fragment>
             }

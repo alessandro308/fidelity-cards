@@ -1,0 +1,298 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Plural-Forms: nplurals = 3; plural = (n % 10 == 1 && n % 100 != 11 ? 0 : n "
+"% 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2);\n"
+"Language: uk\n"
+"mime-version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/App.js:63
+msgid "You are disconnected"
+msgstr "Sei disconnesso"
+
+#: src/App.js:66
+msgid "Fidelity Cards"
+msgstr "Fidelity Cards"
+
+#: src/App.js:70
+msgid "Home"
+msgstr "Home"
+
+#: src/App.js:71
+msgid "New Card"
+msgstr "Nuova Card"
+
+#: src/App.js:72
+msgid "All Cards"
+msgstr "Tutte la cards"
+
+#: src/App.js:73
+msgid "Generate Barcodes"
+msgstr "Genera codici a barre"
+
+#: src/App.js:75
+msgid "Logout"
+msgstr "Esci"
+
+#: src/pages/NewCard/index.js:95
+msgid "Create a new card"
+msgstr "Crea nuova card"
+
+#: src/pages/ManageDb/CardTable.js:20
+#: src/pages/NewCard/index.js:99
+msgid "Name"
+msgstr "Nome"
+
+#: src/pages/NewCard/index.js:102
+msgid "Name and Last Name"
+msgstr "Nome e cognome"
+
+#: src/pages/NewCard/index.js:107
+msgid "Email"
+msgstr "Email"
+
+#: src/pages/Login/Login.component.js:40
+#: src/pages/NewCard/index.js:108
+msgid "Enter email"
+msgstr "Inserisci l'email"
+
+#: src/pages/ManageDb/CardTable.js:21
+#: src/pages/NewCard/index.js:112
+#: src/pages/NewCard/index.js:115
+msgid "Phone"
+msgstr "Telefono"
+
+#: src/pages/CardManagement/index.js:166
+#: src/pages/NewCard/index.js:120
+msgid "Card Number"
+msgstr "Numero Card"
+
+#: src/pages/NewCard/index.js:122
+msgid "12345678 - Required"
+msgstr ""
+
+#: src/pages/NewCard/index.js:128
+msgid "Card number does not exists"
+msgstr "Card non esistente"
+
+#: src/pages/NewCard/index.js:133
+msgid "Referral"
+msgstr "Presentatore"
+
+#: src/pages/NewCard/index.js:142
+msgid "Business"
+msgstr "Business"
+
+#: src/pages/NewCard/index.js:143
+msgid "Standard"
+msgstr "Standard"
+
+#: src/pages/NewCard/index.js:144
+msgid "Gift Card"
+msgstr "Gift Card"
+
+#: src/pages/NewCard/index.js:149
+msgid "Create"
+msgstr "Crea"
+
+#: src/pages/NewCard/index.js:155
+msgid "Card already exists"
+msgstr "La card esiste già."
+
+#: src/pages/NewCard/index.js:157
+msgid ""
+"Delete the previous card before to create a new card with the same Card "
+"Number"
+msgstr ""
+"Elimina la card precedente prima di creare una nuova card con lo stesso numero"
+
+#: src/pages/ManageDb/CardTable.js:22
+msgid "eMail"
+msgstr "eMail"
+
+#: src/pages/ManageDb/CardTable.js:23
+msgid "Type"
+msgstr "Tipo"
+
+#: src/pages/ManageDb/CardTable.js:24
+msgid "Points"
+msgstr "Punti"
+
+#: src/pages/ManageDb/index.js:44
+msgid "Deleting"
+msgstr "Eliminando"
+
+#: src/pages/ManageDb/index.js:50
+msgid "Filter by name"
+msgstr "Filtra per nome"
+
+#: src/pages/ManageDb/index.js:51
+msgid "Customer Name"
+msgstr "Nome cliente"
+
+#: src/pages/Login/Login.component.js:45
+msgid "Password"
+msgstr "Password"
+
+#: src/pages/Login/Login.component.js:48
+msgid "Submit"
+msgstr "Invia"
+
+#: src/pages/Generation/index.js:47
+msgid "Starting Generation Value"
+msgstr "Valore iniziale di generazione"
+
+#: src/pages/Generation/index.js:50
+msgid "Staring Value"
+msgstr "Valore iniziale"
+
+#: src/pages/Generation/index.js:57
+#: src/pages/Generation/index.js:61
+msgid "Label Count"
+msgstr "Contatore etichette"
+
+#: src/pages/Generation/index.js:69
+msgid "Print labels!"
+msgstr "Stampa le etichette!"
+
+#: src/pages/CardManagement/CardChart.js:31
+msgid "This card is not eligible for Business programme!"
+msgstr "Questa card non è usabile per il programma Business!"
+
+#: src/pages/CardManagement/CardChart.js:33
+msgid "Do you want to convert it to standard?"
+msgstr "Vuoi convertire questa card in standard?"
+
+#: src/pages/CardManagement/CardChart.js:35
+msgid "Snooze alert by 90 days"
+msgstr "Posticipa l'avviso di 90 giorno"
+
+#: src/pages/CardManagement/CardChart.js:37
+msgid "Convert to standard"
+msgstr "Converti in standard"
+
+#: src/pages/CardManagement/CardChart.js:77
+#, javascript-format
+msgid "In the last 90 days this card has earned ${ last3MonthPoints } points"
+msgstr "Negli ultimi 90 giorni questa card ha guadagnato ${ last3MonthPoints } punti"
+
+#: src/pages/CardManagement/CardOperationList.js:15
+msgid "Date"
+msgstr "Data"
+
+#: src/pages/CardManagement/CardOperationList.js:16
+msgid "Action"
+msgstr "Azioni"
+
+#: src/pages/CardManagement/CardOperationList.js:29
+msgid "Applied Discount"
+msgstr "Applica sconto"
+
+#: src/pages/CardManagement/CardOperationList.js:31
+msgid "Card Creation"
+msgstr "Creazione card"
+
+#: src/pages/CardManagement/index.js:114
+msgid "Something went wrong. Refresh the page and retry"
+msgstr "Qualcosa è andato storto. Riaggiorna la pagina e riprova."
+
+#: src/pages/CardManagement/index.js:161
+msgid "Card successfully deleted"
+msgstr "Card elminata con successo"
+
+#: src/pages/CardManagement/index.js:167
+msgid "Scan the card code"
+msgstr "Scansiona il codice dalla card"
+
+#: src/pages/CardManagement/index.js:188
+msgid "Referred By: "
+msgstr "Referenziato da: "
+
+#: src/pages/CardManagement/index.js:191
+msgid "Creation Date"
+msgstr "Data Creazione"
+
+#: src/pages/CardManagement/index.js:200
+#: src/pages/CardManagement/index.js:248
+msgid "Delete"
+msgstr "Elimina"
+
+#: src/pages/CardManagement/index.js:204
+msgid "Use gift points"
+msgstr "Usa punti regalo"
+
+#: src/pages/CardManagement/index.js:204
+msgid "Use Discount"
+msgstr "Usa sconto"
+
+#: src/pages/CardManagement/index.js:217
+#: src/pages/CardManagement/index.js:237
+msgid "Add points"
+msgstr "Aggiungi punti"
+
+#: src/pages/CardManagement/index.js:228
+#: src/pages/CardManagement/index.js:229
+msgid "Point to add"
+msgstr "Punti da aggiungere"
+
+#: src/pages/CardManagement/index.js:236
+msgid "Close"
+msgstr "Chiudi"
+
+#: src/pages/CardManagement/index.js:243
+#, javascript-format
+msgid "Do you want to delete the card #${ cardNumber }?"
+msgstr "Vuoi davvero eliminare la card #${ cardNumber }?"
+
+#: src/pages/CardManagement/index.js:247
+#: src/pages/CardManagement/index.js:294
+msgid "Cancel"
+msgstr "Annulla"
+
+#: src/pages/CardManagement/index.js:254
+msgid "Use Gift Points"
+msgstr "Usa punti regalo"
+
+#: src/pages/CardManagement/index.js:254
+#, javascript-format
+msgid "Apply discount to card #${ cardNumber }?"
+msgstr "Vuoi applicare lo sconto alla card #${ cardNumber }?"
+
+#: src/pages/CardManagement/index.js:280
+#: src/pages/CardManagement/index.js:281
+msgid "Gift Point to use"
+msgstr "Punti regalo da usare"
+
+#: src/pages/CardManagement/index.js:286
+msgid "There are no enough points available"
+msgstr "Non ci sono abbastanza punti disponibili"
+
+#: src/pages/CardManagement/index.js:295
+msgid "Use"
+msgstr "Usa"
+
+#: src/App.js:74
+msgid "Manage SMS"
+msgstr "Gestisci SMS"
+
+#: src/pages/SmsConfiguration/index.js:27
+msgid "SMS Text for points."
+msgstr "Testo degli SMS per i punti"
+
+#: src/pages/SmsConfiguration/index.js:37
+#, javascript-format
+msgid "Still available ${ smsQuantity } SMS"
+msgstr "Ancora disponibili ${ smsQuantity } SMS"
+
+#: src/pages/CardManagement/SmsSender.js:41
+msgid "Send Card via Whatsapp"
+msgstr "Invia Card con Whatsapp"
+
+#: src/pages/CardManagement/SmsSender.js:52
+msgid "Send Card Amount via Whatsapp"
+msgstr "Invia Totale Punti con Whatsapp"
+
+#: src/pages/CardManagement/SmsSender.js:63
+msgid "Send Card Amount via SMS"
+msgstr "Invia Totale Puntri tramite SMS"
