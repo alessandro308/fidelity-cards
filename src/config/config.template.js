@@ -31,3 +31,12 @@ export const appConfig = {
     minAmountAtEndOfTheYear: 200,
     minPointsIn3MonthsToBeBusiness: 90,
 };
+
+// On firebase database set
+// {
+//     config: {
+//         skebbyUsername,
+//         skebbyPassword,
+//         smsText,
+//     }
+// }
