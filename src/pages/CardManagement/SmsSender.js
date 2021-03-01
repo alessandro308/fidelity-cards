@@ -20,7 +20,7 @@ export function SmsSender({phone, cardNumber, total}){
     const {config} = useContext(AppConfiguration);
 
     const sendWhatsappLink = (text) => {
-        window.open(`https://web.whatsapp.com/send?phone=${appConfig.countryPrefix}${phone}&text=${text}${url}&autosend=true`, '_blank');
+        window.open(`https://web.whatsapp.com/send?phone=${appConfig.countryPrefix}${phone}&text=${text}&autosend=true`, '_blank');
     };
 
     const sendSmsTotal = (text) => {
